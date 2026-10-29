@@ -584,3 +584,5 @@
 
 # A5 INVARIANT-44: 08:45 L-S Europe/Madrid, tras Flex 08:30; solo lectura, rc 3 con hallazgos.
 45 8 * * 1-6 /home/nanoclaw/nanoclaw-v2/scripts/ops/with_run.sh ledger_flex_check --kind cron --timeout 120 --log /home/nanoclaw/nanoclaw-v2/logs/ledger_flex_check.log -- /bin/sh -c '. /home/nanoclaw/nanoclaw-v2/scripts/with-env.sh && cd /home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones && DATA_DIR=/home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/data /usr/bin/python3 scripts/ledger_flex_check.py' >> /home/nanoclaw/nanoclaw-v2/logs/ledger_flex_check.log 2>&1
+# host_config_drift (David 29-oct-2026): config viva del M5 (systemd --user, crontab, /etc propias, sbin, cloudflared) vs repo ooda-host-config (HEAD); rc 3 = divergencia → supervisor. Arreglo: ~/ooda-host-config/sync.sh + commit + push (Mac: origin=GitHub)
+50 7 * * * /home/nanoclaw/nanoclaw-v2/scripts/ops/with_run.sh host_config_drift --log /home/nanoclaw/nanoclaw-v2/logs/host_config_drift.log --timeout 300 -- /bin/bash /home/nanoclaw/ooda-host-config/sync.sh --check >> /home/nanoclaw/nanoclaw-v2/logs/host_config_drift.log 2>&1
