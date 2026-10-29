@@ -19,7 +19,7 @@ set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 UNITS="${UNITS_DIR:-$HOME/.config/systemd/user}"
 STAGE="$(mktemp -d)"; trap 'rm -rf "$STAGE"' EXIT
-REPO_ONLY_RE='^(sync\.sh|README\.md|\.gitignore)$'
+REPO_ONLY_RE='^(sync\.sh|README\.md|\.gitignore|tests/.*)$'   # tests/: pruebas de los scripts, no se instalan (29-oct-2026)
 IBKR_UNITS_RE='^(ibgateway[^/]*\.(service|timer)|ibkr-proxy\.service|clientportal\.service|xvfb\.service|xfwm4\.service)(\.d/.*)?$'
 ROOT_OK=0; sudo -n true 2>/dev/null && ROOT_OK=1
 

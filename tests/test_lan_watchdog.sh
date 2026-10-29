@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Prueba de histéresis de lan-watchdog (29-oct-2026): stubs de ip/ping/logger/wifi-rescue en un directorio temporal.
 set -euo pipefail
-SRC="${1:-$(dirname "$0")/lan-watchdog}"
+SRC="${1:-$(dirname "$0")/../sbin/lan-watchdog}"
 T="$(mktemp -d)"; trap 'rm -rf "$T"' EXIT
 mkdir -p "$T/bin" "$T/run/systemd/network"
 sed -e "s|/run/|$T/run/|g" -e "s|/usr/local/sbin/wifi-rescue|$T/bin/wifi-rescue|" "$SRC" > "$T/wd"
