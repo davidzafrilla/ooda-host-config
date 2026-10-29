@@ -1,6 +1,0 @@
-[Unit]
-Description=IB Gateway Connection Monitor
-
-[Service]
-Type=oneshot
-ExecStart=/bin/bash /home/nanoclaw/ibkr/ibgw-monitor.sh

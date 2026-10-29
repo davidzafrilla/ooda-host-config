@@ -1,8 +1,0 @@
-[Unit]
-Description=Vigila que el IB Gateway REAL escuche en 4001 (solo avisa; 1-oct-2026, ver ~/ibkr/ibgw-real-guard.sh)
-
-[Service]
-Type=oneshot
-# rc 3 = 4001 sin escuchar (degradado, avisado por DM): no es un fallo de la unidad
-SuccessExitStatus=3
-ExecStart=/bin/bash /home/nanoclaw/ibkr/ibgw-real-guard.sh --watch

@@ -1,7 +1,0 @@
-[Unit]
-Description=Ventana sáb 3-oct 12:30: pantalla :99 de los gateways con cookie (Xvfb -auth, sin -ac); rollback automático si falla (~/ibkr/xvfb-auth-switch.sh)
-OnFailure=ooda-onfailure@%N.service
-
-[Service]
-Type=oneshot
-ExecStart=/bin/bash /home/nanoclaw/ibkr/xvfb-auth-switch.sh apply
