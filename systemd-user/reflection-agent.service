@@ -1,0 +1,15 @@
+[Unit]
+Description=OODA B5.19 reflection_agent — nightly semantic memory update
+After=network.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/scripts/memory
+ExecStart=/usr/bin/python3 /home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/scripts/memory/reflection_agent.py
+EnvironmentFile=/home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/.env
+StandardOutput=append:/home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/scripts/memory/logs/reflection_agent.log
+StandardError=append:/home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/scripts/memory/logs/reflection_agent.log
+TimeoutStartSec=600
+
+[Install]
+WantedBy=default.target

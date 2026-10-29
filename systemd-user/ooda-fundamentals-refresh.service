@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — fundamentals-refresh
+# Weekly yfinance quarterly-fundamentals refresh (purely additive via the floor-date guard; skips cleanly if the DB is locked and catches up the next Sunday). Replaces the Mac OODA repo's weekly fundamentals cron.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/backfill_fundamentals_history.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/fundamentals-refresh.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/fundamentals-refresh.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

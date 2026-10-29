@@ -1,0 +1,10 @@
+[Unit]
+Description=ooda-logrotate diario 03:40 (tras los extractores de la 01:00 y antes de ale-backfill 04:00 y la réplica 05:30)
+
+[Timer]
+OnCalendar=*-*-* 03:40:00
+Persistent=true
+Unit=ooda-logrotate.service
+
+[Install]
+WantedBy=timers.target

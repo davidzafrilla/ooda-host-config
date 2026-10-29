@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — h028-reading
+# 01-oct-2026 (David) — lecturas vinculantes del pre-registro H-028 (continuidad del satelite OODA sobre el libro PAPER: alpha neto acumulado frente al blend P3.2 con el coste LLM restado, t a 6 y 12 meses). Evaluador congelado en nanoclaw-v2 (scripts/h028_satellite_continuity_eval.py; spec reports/preregistro-H028-continuidad-satelite-paper-20261001.spec.json, sha256 f9c92584b3ad48c7). Corre los dias 1-5 de cada mes a las 07:30, tras el walk-forward de las 07:00 y antes de la revision mensual de Strategos (08:30). Hasta la fecha de lectura sale PENDIENTE sin cifras (rc 0 en --cron); el 1-abr-2027 emite la lectura de 6 m y el 1-oct-2027 la de 12 m (18/24 m solo si INCONCLUSO; sus fechas caen en los dias 1-5), escribe nanoclaw-v2/reports/h028/<fecha>_<lectura>/ y manda DM a David; una lectura ya emitida no se repite. rc 4 = INSUFICIENTE (n < minimo) -> fallo real, OnFailure, DM a David.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/nanoclaw-v2/scripts/h028_satellite_continuity_eval.py --root /home/nanoclaw/nanoclaw-v2 --cron
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/h028-reading.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/h028-reading.log
+TimeoutStartSec=300
+SuccessExitStatus=3 75

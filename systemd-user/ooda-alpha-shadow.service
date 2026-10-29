@@ -1,0 +1,14 @@
+[Unit]
+Description=OODA TO-BE — AGENT-ALPHA-001 shadow (Ola 1)
+# Re-evaluación diaria de promoción de watchlist con composite CANÓNICO
+# fail-closed (semántica defecto §8.1 arreglado). Solo-lectura sobre AS-IS.
+# Crosswalk: TO-BE/20_MIGRATION/2026-08-17-ola1-crosswalk-alpha.md
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/shadow_alpha_agent.py
+ExecStartPost=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/shadow_alpha_wake.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/shadow-alpha.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/shadow-alpha.log
+TimeoutStartSec=600

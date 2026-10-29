@@ -1,0 +1,9 @@
+[Unit]
+Description=V9: retirada de PAL/KNOW el 2026-10-07 09:00
+
+[Timer]
+OnCalendar=2026-10-07 09:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

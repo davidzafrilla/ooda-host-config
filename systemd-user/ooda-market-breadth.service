@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — market-breadth
+# 2026-08-23 — tabla OFICIAL silver_market_breadth desde el universo PIT (S&P 500 histórico + toda BME, vivos y deslistados): US_PIT, ES_PIT, US_PIT_UNIV (sectores de nuestro universo) y US_PIT_SEC_*. Antes de label-factory, que lee US_PIT/ES_PIT para regime_breadth. Rebuild completo idempotente (segundos); se salta si la DB esta bloqueada.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.market_breadth
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/market-breadth.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/market-breadth.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

@@ -1,0 +1,8 @@
+[Unit]
+Description=OODA OD-06 §10 — commit automático de groups/*/CLAUDE.local.md (auto-ediciones de los agentes)
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/nanoclaw-v2
+ExecStart=%h/nanoclaw-v2/scripts/agent-notes/commit-agent-notes.sh

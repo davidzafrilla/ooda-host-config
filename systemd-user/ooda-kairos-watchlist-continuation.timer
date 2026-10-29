@@ -1,0 +1,10 @@
+[Unit]
+Description=Observe and continue Kairos watching batch each weekday minute
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 09..22:*:20 Europe/Madrid
+AccuracySec=1s
+Persistent=false
+
+[Install]
+WantedBy=timers.target

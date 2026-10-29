@@ -1,0 +1,10 @@
+[Unit]
+Description=Run ooda-system-state every 15 min (FASE0 F0.9)
+
+[Timer]
+OnCalendar=*:0/15
+Persistent=false
+Unit=ooda-system-state.service
+
+[Install]
+WantedBy=timers.target

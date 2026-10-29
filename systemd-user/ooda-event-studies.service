@@ -1,0 +1,15 @@
+[Unit]
+Description=OODA TO-BE — event-study harness (RFC-0004 pieza 2)
+# Evaluador diario de estudios pre-registrados (H-001 migrada, H-006 8-K,
+# H-007 PEAD). Anti-peeking N>=30/cohorte; criterios congelados por config
+# (hash estampado). Corre tras la fábrica de etiquetas (benchmarks frescos).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.event_study_harness
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.regime_reanalysis
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/event-studies.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/event-studies.log
+TimeoutStartSec=900

@@ -1,0 +1,23 @@
+[Unit]
+Description=Cartera JSON → ooda.db write-through sync (INVARIANT-36)
+After=default.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/nanoclaw/nanoclaw-v2
+# H4: provides OODA_MSG_HMAC_KEY (and other vars) so sign_ipc_payload() can sign
+# the Pol alert IPC payloads. Key stays only in .env (chmod 600), not in the unit.
+EnvironmentFile=/home/nanoclaw/nanoclaw-v2/.env
+ExecStart=/usr/bin/python3 \
+  /home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/scripts/cartera_oodadb_sync.py \
+  --db /home/nanoclaw/nanoclaw-v2/ooda.db \
+  --cartera /home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/data/cartera.json \
+  --interval 30
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=cartera-oodadb-sync
+
+[Install]
+WantedBy=default.target

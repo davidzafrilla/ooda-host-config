@@ -1,0 +1,14 @@
+[Unit]
+Description=Passive archive integrity and isolated native PAPER replay
+
+[Service]
+Type=oneshot
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=false
+Environment=PYTHONDONTWRITEBYTECODE=1
+Nice=10
+TimeoutStartSec=300
+MemoryMax=512M
+SuccessExitStatus=2
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/data/paper-cycle-runtime/service/signal_cycle_followup.py --archive-root %h/nanoclaw-v2/data/paper-cycle-archive/v1 --output-dir %h/nanoclaw-v2/data/paper-cycle-archive/monitor --runner %h/nanoclaw-v2/data/paper-cycle-runtime/service/replay-runner --runtime-id sha256:5d9ac7bbbaf01944895821ad791ce3065bf46f968411cba0e48bf9e8f41771b8 --expected-runs %h/nanoclaw-v2/logs/ops/runs.jsonl --expected-since 2026-10-28T14:35:13.120189+00:00 --schedule-file %h/nanoclaw-v2/data/paper-cycle-runtime/service/schedule.json

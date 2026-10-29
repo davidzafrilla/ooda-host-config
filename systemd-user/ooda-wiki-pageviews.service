@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — wiki-pageviews
+# Auditoría del lake 27-sep-2026, orden 6d — páginas vistas diarias de Wikipedia (en) por empresa, jul-2015→, mapeo ticker→artículo por Wikidata (wiki_articles) → silver_wiki_pageviews (known_from = día + 1).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.wiki_pageviews
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/wiki-pageviews.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/wiki-pageviews.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

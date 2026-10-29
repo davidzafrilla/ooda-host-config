@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh released study catalog hourly independently of research cycle success
+
+[Timer]
+OnCalendar=*-*-* *:19:00 UTC
+AccuracySec=1s
+Persistent=false
+Unit=ooda-signal-floor-publisher.service
+
+[Install]
+WantedBy=timers.target

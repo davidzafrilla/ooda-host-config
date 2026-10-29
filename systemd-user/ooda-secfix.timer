@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer — secfix cada 2 min (respuestas de David por Telegram, hallazgos nuevos del secloop, vigilancia de fixes)
+
+[Timer]
+OnCalendar=*:0/2
+Persistent=false
+
+[Install]
+WantedBy=timers.target

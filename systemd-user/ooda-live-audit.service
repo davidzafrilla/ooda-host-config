@@ -1,0 +1,16 @@
+[Unit]
+Description=OODA — auditoría de la cuenta IBKR REAL (solo lectura): órdenes automatizadas, IBC ReadOnlyApi, relé, censo de código
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStartPre=-%h/nanoclaw-v2/scripts/ops/record_run.sh start %n
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/groups/telegram_inversiones/scripts/broker/__main__.py live-audit
+ExecStopPost=-%h/nanoclaw-v2/scripts/ops/record_run.sh end %n
+Environment=OODA_RUN_LOG=%h/nanoclaw-v2/groups/telegram_inversiones/logs/live_audit.log
+StandardOutput=append:%h/nanoclaw-v2/groups/telegram_inversiones/logs/live_audit.log
+StandardError=append:%h/nanoclaw-v2/groups/telegram_inversiones/logs/live_audit.log
+# 3 = gateway real caído (no se pudo censar órdenes) o hallazgos MEDIUM · 4 = CRITICAL/HIGH → OnFailure + DM directo
+SuccessExitStatus=3
+TimeoutStartSec=180

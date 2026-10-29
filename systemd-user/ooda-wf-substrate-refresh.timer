@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA TO-BE — wf-substrate-refresh timer
+
+[Timer]
+OnCalendar=*-*-01 06:20:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

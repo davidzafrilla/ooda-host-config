@@ -1,0 +1,11 @@
+[Unit]
+Description=Schedule prospective signal-floor cycle
+
+[Timer]
+OnCalendar=*-*-* *:17:00 UTC
+AccuracySec=1s
+Persistent=false
+Unit=ooda-signal-floor-cycle.service
+
+[Install]
+WantedBy=timers.target

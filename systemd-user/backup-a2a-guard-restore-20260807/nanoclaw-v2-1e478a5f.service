@@ -1,0 +1,22 @@
+[Unit]
+Description=NanoClaw Personal Assistant
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node /home/nanoclaw/nanoclaw-v2/dist/index.js
+WorkingDirectory=/home/nanoclaw/nanoclaw-v2
+Restart=always
+RestartSec=5
+KillMode=process
+Environment=HOME=/home/nanoclaw
+Environment=PATH=/usr/local/bin:/usr/bin:/bin:/home/nanoclaw/.local/bin
+Environment=A2A_MAX_CHAIN=999999
+Environment=A2A_RATE_MAX=999999
+Environment=A2A_MAX_PER_DAY=999999
+Environment=A2A_CHAIN_DIVERSE_MAX=999999
+StandardOutput=append:/home/nanoclaw/nanoclaw-v2/logs/nanoclaw.log
+StandardError=append:/home/nanoclaw/nanoclaw-v2/logs/nanoclaw.error.log
+
+[Install]
+WantedBy=default.target

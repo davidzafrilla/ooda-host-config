@@ -1,0 +1,6 @@
+[Unit]
+Description=Adenda C3 (David 26-sep-2026): tanda L2C entera como 20260926-L2C2, una vez, tras el reinicio del mantenimiento
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash %h/llm/calib/launch_l2c2_once.sh

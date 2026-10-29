@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — news-pending
+# 15-oct-2026 — pasada vespertina «solo pendientes» de noticias EODHD (daily_news_staging.py --only-pending): consulta únicamente los tickers que la pasada de las 09:15 y el pipeline de las 10:00 dejaron sin consultar o fallidos (logs/news_staging_state.json de HOY). Sin estado de hoy o sin pendientes no descarga ni toca la DB (rc 0); mismo presupuesto (OODA_NEWS_BUDGET_S), timeouts y reintento; rc 3 si aún queda algo. Cerrojo logs/news_staging.lock: si otra pasada de noticias lo tiene, sale rc 0 sin descargar. 17:40: tras el cierre europeo, sin escritores de ooda.duckdb entre ooda-options-chains-load (:45, ~1 s) y ooda-price-cycle 18:15 (~12 s); la carga al lake (~17:51 si agota los 600 s) cae en ese hueco y, si la DB está ocupada, queda diferida al siguiente cargador.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/daily_news_staging.py --only-pending
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/news-pending.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/news-pending.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

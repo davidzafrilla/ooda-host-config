@@ -1,0 +1,8 @@
+[Unit]
+Description=NanoClaw Memory Snapshot — actualiza memoria para Joe y Kairos
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/scripts/memory
+ExecStart=/usr/bin/python3 /home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/scripts/memory/update_memory_snapshot.py --all
+TimeoutStartSec=60

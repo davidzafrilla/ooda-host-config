@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — price-export-shadow
+# B4 (en SOMBRA): compara el export del lake con el price_history_daily.json vivo tras el plazo de cada franja (09:00, 09:45, 18:45), vinculado a la pasada concreta de price_cycle; ticker, fecha y magnitud de cada discrepancia en logs/price_export_shadow.jsonl; --verdict tras 10 sesiones. Solo lectura.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/price_export_shadow_compare.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/price-export-shadow.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/price-export-shadow.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

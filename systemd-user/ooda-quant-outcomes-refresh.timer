@@ -1,0 +1,12 @@
+[Unit]
+Description=Measure mature quantitative predictions after price and split evidence refresh
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 10:15:00 Europe/Madrid
+OnCalendar=Mon..Fri *-*-* 23:55:00 Europe/Madrid
+AccuracySec=1s
+Persistent=false
+Unit=ooda-quant-outcomes-refresh.service
+
+[Install]
+WantedBy=timers.target

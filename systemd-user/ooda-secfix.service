@@ -1,0 +1,16 @@
+[Unit]
+Description=OODA — secfix: avisa de los hallazgos del secloop, recoge los OK de David por Telegram, autoaplica la clase 3 y vigila/revierte, 27-oct-2026 (scripts/ops/secfix.py)
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStartPre=-%h/nanoclaw-v2/scripts/ops/record_run.sh start %n
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/scripts/ops/secfix.py
+ExecStopPost=-%h/nanoclaw-v2/scripts/ops/record_run.sh end %n
+Environment=OODA_RUN_LOG=%h/nanoclaw-v2/logs/ops/secfix.log
+StandardOutput=append:%h/nanoclaw-v2/logs/ops/secfix.log
+StandardError=append:%h/nanoclaw-v2/logs/ops/secfix.log
+# 3 = fix fallido o empujado sin desplegar (lo dice el DM) · 75 = cerrojo
+SuccessExitStatus=3 75
+TimeoutStartSec=1800

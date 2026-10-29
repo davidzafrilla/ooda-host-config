@@ -1,0 +1,7 @@
+[Unit]
+Description=OODA TO-BE — ciclo diario 1m 06:15 L-V — ACTIVO en producción (M5) desde el 19-sep-2026 (B8); antes en el 2013 desde el 10-sep (Momento B)
+[Timer]
+OnCalendar=Mon..Fri 06:15 Europe/Madrid
+Persistent=false
+[Install]
+WantedBy=timers.target

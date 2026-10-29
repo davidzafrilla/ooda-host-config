@@ -1,0 +1,13 @@
+[Unit]
+Description=Capturas EODHD D1 BME: tras el cierre, noche y mañana siguiente
+
+[Timer]
+OnCalendar=Mon..Fri 18:15 Europe/Madrid
+OnCalendar=Mon..Fri 20:30 Europe/Madrid
+OnCalendar=Mon..Fri 23:30 Europe/Madrid
+OnCalendar=Tue..Sat 08:00 Europe/Madrid
+Persistent=false
+Unit=ooda-eodhd-bme-capture.service
+
+[Install]
+WantedBy=timers.target

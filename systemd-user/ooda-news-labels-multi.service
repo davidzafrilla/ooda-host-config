@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — news-labels-multi
+# 2026-08-23 — etiquetas outcome por (articulo, ticker) desde el modelo multi-ticker (news_tickers): gold_news_labels_multi + export parquet. Dataset nuevo (news-outcome-multi-v1); no toca gold_news_labels v1/v2 (pre-registro congelado). Tras label-factory; se salta si la DB esta bloqueada.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.news_outcome_labels_multi
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/news-labels-multi.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/news-labels-multi.log
+TimeoutStartSec=2700
+SuccessExitStatus=3 75

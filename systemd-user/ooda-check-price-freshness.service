@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — check-price-freshness
+# Gate: confirms silver_prices_daily actually gained a recent trading day (not just that upstream steps exited 0). Added 2026-08-21 after Pol found the AS-IS host's data_price_history.py trigger was unregistered anywhere — same silent-stop risk exists here independently. Alerts to logs/ALERTS.log (+ best-effort macOS notification, a no-op on the host today).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/check_price_freshness.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/check-price-freshness.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/check-price-freshness.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

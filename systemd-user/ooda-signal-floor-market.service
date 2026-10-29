@@ -1,0 +1,12 @@
+[Unit]
+Description=Prospective signal-floor market; private research, no orders or messages
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/nanoclaw-v2/data/signal-floor-followup-runtime
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+Nice=10
+TimeoutStartSec=1800
+ExecStart=/usr/bin/python3 %h/nanoclaw-v2/data/signal-floor-followup-runtime/scripts/signal_floor_service.py market --protocol %h/nanoclaw-v2/data/signal-floor-followup-runtime/config/signal_floor_followup.json --data-dir %h/nanoclaw-v2/groups/telegram_inversiones/data --archive %h/nanoclaw-v2/data/signal-floor-followup/archive --state-dir %h/nanoclaw-v2/data/signal-floor-followup/state --ledger %h/nanoclaw-v2/data/signal-floor-followup/research_events.jsonl --env-file %h/ooda-tobe/.env

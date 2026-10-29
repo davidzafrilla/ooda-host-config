@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA TO-BE — core-passive-nav timer
+
+[Timer]
+OnCalendar=Tue,Wed,Thu,Fri,Sat *-*-* 08:05:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

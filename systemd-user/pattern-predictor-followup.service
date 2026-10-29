@@ -1,0 +1,21 @@
+[Unit]
+Description=Passive pattern input receipts and preregistered maturity preflight
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/nanoclaw-v2/data/pattern-predictor-runtime/20261028-v1
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=XDG_CACHE_HOME=/home/nanoclaw/nanoclaw-v2/data/pattern-predictor-followup/v1/cache
+ExecStart=/usr/bin/python3 /home/nanoclaw/nanoclaw-v2/data/pattern-predictor-runtime/20261028-v1/scripts/pattern_predictor_followup.py --archive-root /home/nanoclaw/nanoclaw-v2/data/paper-cycle-archive/v1 --output-dir /home/nanoclaw/nanoclaw-v2/data/pattern-predictor-followup/v1 --source-dir /home/nanoclaw/nanoclaw-v2/data/pattern-predictor-runtime/20261028-v1/native --config /home/nanoclaw/nanoclaw-v2/data/pattern-predictor-runtime/20261028-v1/pattern_pit_collection.json --benchmark-root /home/nanoclaw/nanoclaw-v2/data/pattern-predictor-benchmarks/v1 --capture-benchmarks --protocol /home/nanoclaw/nanoclaw-v2/data/pattern-predictor-runtime/20261028-v1/protocol.json
+TimeoutStartSec=300
+Nice=10
+CPUQuota=50%
+MemoryMax=2G
+UMask=0077
+NoNewPrivileges=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+[Install]
+WantedBy=default.target

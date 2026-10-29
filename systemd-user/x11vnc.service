@@ -1,0 +1,12 @@
+[Unit]
+Description=x11vnc VNC server for display :99
+After=xvfb.service ibgateway.service
+Requires=xvfb.service
+
+[Service]
+ExecStart=/usr/bin/x11vnc -display :99 -localhost -nopw -forever -shared -quiet
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

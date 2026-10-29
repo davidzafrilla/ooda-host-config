@@ -1,0 +1,10 @@
+[Unit]
+Description=OODA FASE0 F0.11 v2 — diario 23:40: scan de cobertura T1 (EXE-002)
+
+[Timer]
+OnCalendar=*-*-* 23:40:00
+Persistent=true
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

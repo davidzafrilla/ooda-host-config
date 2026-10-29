@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — options-chains
+# Auditoría del lake 27-sep-2026 — cadena de opciones diaria (yfinance) de los tickers US del universo: vencimientos más próximos a 7/14/30/60/90/180 días, strikes ±30 % del spot, bid/ask/last/volumen/OI/IV → bronze/options_chains/ <fecha>.parquet → fact_options (source YFINANCE_CHAIN). El histórico no se puede recuperar después: cada día cuenta. ~13 min, tras el cierre US.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/collect_options_chains_yfinance.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/options-chains.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/options-chains.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

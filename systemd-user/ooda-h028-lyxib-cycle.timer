@@ -1,0 +1,11 @@
+[Unit]
+Description=Prospective H-028 LYXIB capture schedule
+
+[Timer]
+OnCalendar=*-*-* 23:12,17,22,25:00 Europe/Madrid
+Persistent=false
+AccuracySec=1s
+Unit=ooda-h028-lyxib-cycle.service
+
+[Install]
+WantedBy=timers.target

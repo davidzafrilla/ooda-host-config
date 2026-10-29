@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — ohlcv-aggregates
+# 30-sep-2026 (encargo de David) — barras de 5, 15 y 60 minutos (fact_ohlcv_5min, fact_ohlcv_15min, fact_ohlcv_1hour) derivadas de fact_ohlcv_1min, alineadas a la apertura de cada sesión. Incremental: recalcula los últimos 3 días y reconstruye entero cualquier ticker cuya historia de 1 min haya crecido hacia atrás. Espera al lock del lake hasta 1 h. 07:55 L-D: tras el catch-up de 1 min del ciclo de las 06:15 y antes de datalake-status (08:35).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/build_ohlcv_aggregates.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/ohlcv-aggregates.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/ohlcv-aggregates.log
+TimeoutStartSec=5400
+SuccessExitStatus=3 75

@@ -1,0 +1,9 @@
+[Unit]
+Description=Una sola vez: sáb 3-oct-2026 12:30, Xvfb :99 → -auth (antes de la ventana de las 13:30)
+
+[Timer]
+OnCalendar=2026-10-03 12:30:00
+Persistent=false
+
+[Install]
+WantedBy=timers.target

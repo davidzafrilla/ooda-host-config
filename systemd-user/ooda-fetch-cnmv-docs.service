@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — fetch-cnmv-docs
+# Texto de las comunicaciones oficiales de la CNMV (OIR, IP, HR; documentos públicos) a fact_regulatory_docs, concepto propio (27-sep-2026). Bronze primero (bronze/cnmv_docs/*.jsonl), 1 petición/s, tope 1.500 por ejecución: el histórico (~11.600) se completa en ~8 días y después solo entran las nuevas.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/fetch_cnmv_docs.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/fetch-cnmv-docs.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/fetch-cnmv-docs.log
+TimeoutStartSec=7200
+SuccessExitStatus=3 75

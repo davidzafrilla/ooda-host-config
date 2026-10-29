@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — quotes-campaign
+# Auditoría del lake 27-sep-2026, orden de David (opción b) — campaña 1 min MIDPOINT + BID_ASK por el gateway PAPER :4002 con la estrategia del backfill TRADES (scripts/backfill_intraday_ibkr.py): MIDPOINT 730 d → BID_ASK 730 d → ambos --until-complete → mantenimiento diario. Escribe en su propio staging (ooda_1m_quotes_staging.duckdb) y vuelca al lake tras cada segmento de 2 h (fact_ohlcv_1min_mid, fact_ohlcv_1min_bidask + v_ohlcv_1min_bidask). Nunca corre L-V 05:40-09:30 (ciclo diario) y cede si ve otro backfill. Se arranca a diario a las 09:35 y sigue hasta el siguiente bloqueo (flock: una sola instancia); el viernes enlaza con el fin de semana.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/quotes_campaign.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/quotes-campaign.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/quotes-campaign.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

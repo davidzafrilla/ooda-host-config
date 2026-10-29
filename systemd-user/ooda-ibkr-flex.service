@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — ibkr-flex
+# 27-sep-2026 — IBKR Flex (servicio web) → silver_ibkr_executions: ejecuciones oficiales de la cuenta real con hora exacta y hora de la orden (arrival) para gold_execution_quality. Sin IBKR_FLEX_TOKEN / IBKR_FLEX_QUERY_ID en .env sale con status not_configured (rc 0). Comprueba la zona horaria contra las ejecuciones conocidas y no escribe si no cuadra. Antes de execution-quality.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/fetch_ibkr_flex.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/ibkr-flex.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/ibkr-flex.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

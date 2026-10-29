@@ -1,0 +1,12 @@
+[Unit]
+Description=Timer — ciclo de los libros simulados PSIM-001: cada 5 min a y 03/08/13… 08-22 h L-V + 23:08; fines de semana cada 10 min (Europe/Madrid), siempre tras el ciclo IBKR (y 00/05/10…)
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 08..22:03/5:00
+OnCalendar=Mon..Fri *-*-* 23:08:00
+OnCalendar=Sat,Sun *-*-* 08..22:03/10:00
+Persistent=false
+RandomizedDelaySec=10
+
+[Install]
+WantedBy=timers.target

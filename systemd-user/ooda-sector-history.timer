@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA TO-BE — sector-history timer (semanal, sábados 12:30; David 22-oct)
+
+[Timer]
+OnCalendar=Sat *-*-* 12:30:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

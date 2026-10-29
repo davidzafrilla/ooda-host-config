@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA TO-BE — single-source-audit timer
+
+[Timer]
+OnCalendar=Mon,Tue,Wed,Thu,Fri,Sat,Sun *-*-* 07:30:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

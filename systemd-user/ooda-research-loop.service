@@ -1,0 +1,16 @@
+[Unit]
+Description=Bounded prospective formula learning; independent validation, manual promotion
+After=default.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/nanoclaw-v2/data/research-loop-runtime
+# Docker bind mounts need the real host temporary path and traversable app/data directories.
+# Research state and input files retain explicit private modes in the frozen runtime.
+UMask=0022
+PrivateTmp=false
+NoNewPrivileges=true
+Environment=PYTHONDONTWRITEBYTECODE=1
+Nice=10
+TimeoutStartSec=300
+ExecStart=/usr/bin/python3 %h/nanoclaw-v2/data/research-loop-runtime/scripts/research_loop_service.py --config %h/nanoclaw-v2/data/research-loop-runtime/config/research_loop_service.json

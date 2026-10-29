@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — label-factory
+# RFC-0004 pieza 1 — triple-barrier label factory (gold_labels, excess returns vs QQQ/^IBEX) + PIT training view (gold_training_view). Idempotent: benchmark-series refresh, new-t0 registration, maturation sweep on the joint session calendar, ret_x_20d completion, training view rebuild. Daily after ingestion close; skips cleanly if the DB is locked. All 7 days: maturation is session-calendar-driven, so weekend runs are harmless catch-up.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.label_factory
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/label-factory.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/label-factory.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

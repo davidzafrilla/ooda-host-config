@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer — AGENT-IC-001 shadow (Ola 4) — rubrica vs veredictos de Pol, retroactivos, cadena a David (23:55 Europe/Madrid, L-V)
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 23:55:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

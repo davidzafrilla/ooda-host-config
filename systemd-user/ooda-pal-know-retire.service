@@ -1,0 +1,6 @@
+[Unit]
+Description=V9 (David, 25-sep-2026): retirar PAL/KNOW el 7-oct (desactiva ooda-pal-know-shadow.timer; el script se conserva)
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "systemctl --user disable --now ooda-pal-know-shadow.timer && echo \"$(date -Is) PAL/KNOW retirado (V9)\" >> /home/nanoclaw/ops/retiro_sombras_20260926/pal_know_retire.log && systemctl --user disable ooda-pal-know-retire.timer"

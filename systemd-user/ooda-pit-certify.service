@@ -1,0 +1,14 @@
+[Unit]
+Description=OODA TO-BE — pit-certify
+# 4-oct-2026 (revisión 2 de David, fixes 1 y 7) — certificado del paquete nocturno de la capa PIT cada día, también sábado y domingo (la batería de las 11:00 es L-V): scripts/run_validators.sh --only scripts/validate_pit_training.py, con el mismo sandbox, guarda de centinelas y publicación controlada que la batería (scripts/publish_pit_certificates.py → reference/pit/certificates/<release_id>/). scripts/pit_nights.py solo cuenta una noche si su paquete tiene un certificado pass emitido por un timer con la política de validación de esa pasada y ningún FAIL. Tras pit-training (00:05, ~2 min).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/bin/bash /home/nanoclaw/ooda-tobe/scripts/run_validators.sh --only scripts/validate_pit_training.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/pit-certify.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/pit-certify.log
+TimeoutStartSec=900
+SuccessExitStatus=3 75
+

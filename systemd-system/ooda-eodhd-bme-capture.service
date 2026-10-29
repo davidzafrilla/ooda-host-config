@@ -1,0 +1,16 @@
+[Unit]
+Description=Cualificación EODHD D1 BME: captura bajo el recolector de recibos
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ooda-receipts
+Group=ooda-receipts
+ExecStart=/usr/bin/python3 -I /srv/ooda-receipts/bin/run_receipts.py run --store /srv/ooda-receipts/store --study-id eodhd-d1-bme --study-uid 9702 --code /srv/ooda-study/eodhd_d1_bme/code --config /srv/ooda-study/eodhd_d1_bme/universe.json --outputs /srv/ooda-study/eodhd_d1_bme/out --declared last-run.json --timeout 1800 -- /usr/bin/python3 -I /srv/ooda-study/eodhd_d1_bme/code/capture.py --universe /srv/ooda-study/eodhd_d1_bme/universe.json --out /srv/ooda-study/eodhd_d1_bme/out --key-file /etc/ooda-study/eodhd.key --from 2025-01-01 --declared last-run.json
+# systemd mata todo el cgroup, también el estudio bajo sudo, que el recolector sin root no puede matar.
+KillMode=control-group
+TimeoutStartSec=2400
+PrivateTmp=yes
+ProtectSystem=full
+ProtectHome=yes

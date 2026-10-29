@@ -1,0 +1,13 @@
+[Unit]
+Description=Observe prospective pattern study every fifteen minutes
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 08..23:00/15:00 Europe/Madrid
+OnCalendar=Sat,Sun *-*-* 12:00:00 Europe/Madrid
+OnBootSec=3min
+RandomizedDelaySec=20
+Persistent=false
+Unit=pattern-predictor-followup.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA — supervisor determinista (S1, 20-sep-2026): runs.jsonl, systemd --failed, unit_failures, logs, disco → hallazgos, dueños, tickets
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=XDG_RUNTIME_DIR=/run/user/1001
+ExecStart=/usr/bin/python3 %h/nanoclaw-v2/scripts/ops/ops_supervisor.py
+StandardOutput=append:%h/nanoclaw-v2/logs/ops_supervisor.log
+StandardError=inherit
+# 27-sep-2026: rc 75 = cerrojo ocupado (otra pasada del supervisor/digest en curso; docs/ops-exit-codes.md): no es un
+# fallo → sin OnFailure; record_run.sh lo registra como status=lock (EXIT_STATUS=75 con SERVICE_RESULT=success).
+SuccessExitStatus=75

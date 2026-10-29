@@ -1,0 +1,14 @@
+[Unit]
+Description=OODA TO-BE — AGENT-QUANT-001 shadow (Ola 1)
+# Freeze-watch de weights_active + re-evaluación gate §14 (DSR exceso/PIT) +
+# ledger de hipótesis. Solo-lectura sobre artefactos AS-IS.
+# Crosswalk: TO-BE/20_MIGRATION/2026-08-17-ola1-crosswalk-quant.md
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/shadow_quant_agent.py
+ExecStartPost=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/shadow_quant_wake.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/shadow-quant.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/shadow-quant.log
+TimeoutStartSec=600

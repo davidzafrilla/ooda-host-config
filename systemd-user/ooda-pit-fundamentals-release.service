@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — pit-fundamentals-release
+# 23-oct-2026 (F4.2 CONGELADO §5; D-b de David) — src/pipelines/pit_fundamentals_release.py: release diario pit-fundamentals/1 con gold_pit_fundamentals_daily (una fila por código y fecha US del universo de pit-training, campos con known_from). Solo publica si el padre tiene certificado pass, el recibo de la fuente es utilizable y la pasada del sábado de pit-fundamentals-us está acreditada; si no, rc 3 y la noche no es verde. Fija el padre en pit/releases/pins/ y captura sus entradas por contenido (pit/fundamentals_sources/).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/src/pipelines/pit_fundamentals_release.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/pit-fundamentals-release.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/pit-fundamentals-release.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

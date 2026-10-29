@@ -1,0 +1,10 @@
+[Unit]
+Description=OODA TO-BE — sector-signals timer
+
+[Timer]
+OnCalendar=Mon,Tue,Wed,Thu,Fri *-*-* 12:15:00 Europe/Madrid
+OnCalendar=Mon,Tue,Wed,Thu,Fri *-*-* 18:45:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

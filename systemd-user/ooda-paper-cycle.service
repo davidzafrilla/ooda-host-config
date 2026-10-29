@@ -1,0 +1,20 @@
+[Unit]
+Description=OODA — ciclo IBKR PAPER (27-sep-2026): sync + reconciliación + decisiones → órdenes PAPER + NAV/web. Nunca toca LIVE.
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/nanoclaw-v2/groups/telegram_inversiones/scripts
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStartPre=-%h/nanoclaw-v2/scripts/ops/record_run.sh start %n
+# -P: ni cwd ni el directorio del script entran en sys.path (integrity.py); ruta absoluta al __main__.
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/groups/telegram_inversiones/scripts/broker/__main__.py cycle
+ExecStopPost=-%h/nanoclaw-v2/scripts/ops/record_run.sh end %n
+Environment=OODA_RUN_LOG=%h/nanoclaw-v2/groups/telegram_inversiones/logs/paper_cycle.log
+StandardOutput=append:%h/nanoclaw-v2/groups/telegram_inversiones/logs/paper_cycle.log
+StandardError=append:%h/nanoclaw-v2/groups/telegram_inversiones/logs/paper_cycle.log
+# 3 = degradado (gateway paper caído / avisos de reconciliación): se ve en la web, no dispara OnFailure.
+# 4 = configuración LIVE/PAPER inválida, código alterado (integrity) o SECURITY_VIOLATION: falla → OnFailure.
+SuccessExitStatus=3
+TimeoutStartSec=240
+Nice=10

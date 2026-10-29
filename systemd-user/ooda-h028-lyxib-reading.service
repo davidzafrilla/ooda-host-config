@@ -1,0 +1,13 @@
+[Unit]
+Description=H-028 scheduled LYXIB reading; private evidence, no orders or messages
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/nanoclaw-v2/data/h028-lyxib-runtime
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+TimeoutStartSec=300
+Nice=10
+ExecStart=/usr/bin/python3 %h/nanoclaw-v2/data/h028-lyxib-runtime/scripts/h028_lyxib_reading.py --spec %h/nanoclaw-v2/data/h028-lyxib-runtime/reports/preregistro-H028-LYXIB-20261026.spec.json --calendar %h/nanoclaw-v2/data/h028-lyxib-runtime/config/calendar_2026.json --state-dir %h/nanoclaw-v2/data/h028-lyxib-shadow --cost-db %h/nanoclaw-v2/data/llm_usage.db --reading 6m
+ExecStart=/usr/bin/python3 %h/nanoclaw-v2/data/h028-lyxib-runtime/scripts/h028_lyxib_reading.py --spec %h/nanoclaw-v2/data/h028-lyxib-runtime/reports/preregistro-H028-LYXIB-20261026.spec.json --calendar %h/nanoclaw-v2/data/h028-lyxib-runtime/config/calendar_2026.json --state-dir %h/nanoclaw-v2/data/h028-lyxib-shadow --cost-db %h/nanoclaw-v2/data/llm_usage.db --reading 12m

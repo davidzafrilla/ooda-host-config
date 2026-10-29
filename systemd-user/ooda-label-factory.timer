@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA TO-BE — label-factory timer
+
+[Timer]
+OnCalendar=Mon,Tue,Wed,Thu,Fri,Sat,Sun *-*-* 23:50:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

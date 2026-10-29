@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — sec-fundamentals-pit
+# Auditoría del lake 27-sep-2026, orden 4 (DQ-013) — fundamentales point-in-time desde XBRL companyfacts de la SEC: silver_fundamentals_asreported (todas las versiones) + silver_fundamentals_pit (trimestral, tal como se publicó, known_from = filed + 1 d). Solo re-descarga los CIK con 10-K/10-Q nuevo (lo dice el JSON de submissions de event-lite, 01:30).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.sec_fundamentals_pit
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/sec-fundamentals-pit.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/sec-fundamentals-pit.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

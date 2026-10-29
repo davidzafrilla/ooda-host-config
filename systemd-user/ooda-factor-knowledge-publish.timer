@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA TO-BE — factor-knowledge-publish timer
+
+[Timer]
+OnCalendar=Mon,Tue,Wed,Thu,Fri,Sat,Sun *-*-* 07:15:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

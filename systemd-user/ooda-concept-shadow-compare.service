@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — concept-shadow-compare
+# Sombra comparativa por concepto (B3-B7, plazo 18-oct): lo que lee el motor (JSON de NanoClaw) frente a la versión del lake (precios, macro, opciones IBKR vs yfinance, noticias). Solo lectura; una línea por sesión en logs/concept_shadow.jsonl; veredicto con --verdict tras 10 sesiones (27-sep-2026).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/concept_shadow_compare.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/concept-shadow-compare.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/concept-shadow-compare.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

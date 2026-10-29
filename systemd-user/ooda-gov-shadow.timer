@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer — AGENT-GOV-001 shadow (Ola 2) — verificacion de citas en escalados de Pol, censo A2A, recibos (23:30 Europe/Madrid, L-V)
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 23:30:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

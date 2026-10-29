@@ -1,0 +1,13 @@
+[Unit]
+Description=Refresh qualified price evidence and OD-05 quantitative labels
+After=ooda-splits.service ooda-price-cycle.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/ooda-tobe
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+Nice=10
+TimeoutStartSec=2700
+ExecStart=/usr/bin/python3 %h/nanoclaw-v2/data/research-loop-runtime/scripts/refresh_quant_outcomes.py --root %h/nanoclaw-v2 --ooda-root %h/ooda-tobe --archive %h/nanoclaw-v2/data/research-loop/outcomes

@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — sync-to-replica
+# Instantánea consistente del lake (lock + CHECKPOINT + copia local), envío por delta a la réplica del Mac (clon APFS + rsync --inplace), swap atómico, réplica en solo lectura (444) y sello REPLICA_STAMP.json; más el resto de data_lake/ (bronze, reference, silver, gold), know_store y logs sombra. Solo empuja: la réplica nunca escribe de vuelta. Diario a las 03:00, tras el último escritor nocturno (lake único, 27-sep-2026; antes L-V 22:30).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/bin/bash /home/nanoclaw/ooda-tobe/scripts/sync_to_replica.sh
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/sync-to-replica.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/sync-to-replica.log
+TimeoutStartSec=14400
+SuccessExitStatus=3 75

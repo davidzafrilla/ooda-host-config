@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — check-validation-streaks
+# Rachas de rechazo en silver_validation_log (auditoría de fallos silenciosos 27-sep-2026): dominio×check con >= 3 pasadas seguidas rechazadas en >= 50 % de sus filas → HALLAZGO, logs/validation_streaks_last.json (overall degraded, lo lee alerts_relay: es el aviso); rc 0 si el informe quedó escrito (sin doble aviso por OnFailure), 3 solo con --no-report. Ignora dominio×check sin pasadas en 12 h (retirados); sin ninguna pasada → no_recent_runs. Solo lectura. Tras el daily-pipeline (10:00).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/check_validation_streaks.py --min-reject-ratio 0.5
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/check-validation-streaks.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/check-validation-streaks.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

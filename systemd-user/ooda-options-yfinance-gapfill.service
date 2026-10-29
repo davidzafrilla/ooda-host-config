@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — options-yfinance-gapfill
+# Free yfinance options-summary gap-filler for whatever options-backfill (EODHD) didn't cover today — checks silver_options_summary first and only fetches uncovered tickers, so it never overwrites EODHD data. Added 2026-08-21 as a hedge: EODHD is being cancelled after Oct 2026 (Mac OODA repo's backfill_completion_strategy memory), so this is also the intended replacement path once that happens. No .MC/IBEX coverage (Yahoo has no MEFF chains). iv_skew_25d is a strike-distance proxy, not a real delta — tagged source='YFINANCE_SNAPSHOT'.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/collect_options_snapshot_yfinance.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/options-yfinance-gapfill.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/options-yfinance-gapfill.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

@@ -1,0 +1,11 @@
+[Unit]
+Description=R11/R12 append-only closing evidence and read-only agent observation
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/nanoclaw-v2
+ExecStart=/usr/bin/python3 scripts/collect_agent_activity.py
+ExecStart=/usr/bin/python3 groups/telegram_inversiones/scripts/closing_operational_status.py --capture
+TimeoutStartSec=90
+UMask=0022
+NoNewPrivileges=yes

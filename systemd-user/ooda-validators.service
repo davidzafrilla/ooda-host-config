@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — validators
+# All 6 validator suites in sequence (event catalog, Phase 4 shadow, Phase 5, data quality §4.2, knowledge inheritance, labels RFC-0004).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/bin/bash /home/nanoclaw/ooda-tobe/scripts/run_validators.sh
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/validators.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/validators.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

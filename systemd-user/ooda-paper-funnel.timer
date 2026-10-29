@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer — registro del embudo PAPER, L-V 23:15 (hora del host, Europe/Madrid): tras el último ciclo paper (cierre de las 23:05) y con el market_daily del cierre de EE. UU. ya publicado (~22:40 CEST / ~21:40 CET)
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 23:15:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,16 @@
+[Unit]
+Description=IBKR Client Portal Gateway
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/nanoclaw/ibkr/clientportal
+ExecStart=/bin/bash bin/run.sh root/conf.yaml
+Restart=on-failure
+RestartSec=10
+StandardOutput=append:/home/nanoclaw/ibkr/clientportal/cpgw.log
+StandardError=append:/home/nanoclaw/ibkr/clientportal/cpgw.log
+
+[Install]
+WantedBy=default.target

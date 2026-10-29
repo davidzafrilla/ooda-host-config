@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — news-ingestion
+# Staging-first EODHD news fetch (always writes to bronze/eodhd_news_backfill/_daily/, loads into fact_news only when the DB lock is free, backlog catch-up included). Replaces the Mac OODA repo's daily_news_ingestion cron so the host is the ingestion superset.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/daily_news_staging.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/news-ingestion.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/news-ingestion.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

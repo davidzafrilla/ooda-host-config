@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — qqq-holdings-refresh
+# 4-oct-2026 (opción A2, David 3-oct: «OK al orden») — scripts/build_qqq_holdings.py: carteras del Invesco QQQ Trust en SEC EDGAR (UIT, CIK 1067839): inicial 5-mar-1999 + anuales a 30-sep 1999-2024 (485BPOS / N-30B-2) + NPORT-P trimestral 2019 →, ~50 instantáneas. Casa cada línea con un código EODHD verificando el cierre de esa fecha (precio implícito = valor / acciones) → pit_qqq_holdings.parquet + pit_qqq_report.json (contraste con A1). Si alguna instantánea casa < 97 %, rc 3 y no escribe. Documentos en caché en data_lake/bronze/sec_qqq (solo baja lo nuevo: 1 llamada a EDGAR + 2 listas EODHD + precios de códigos nuevos). Semanal, antes de ndx-history-refresh.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/build_qqq_holdings.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/qqq-holdings-refresh.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/qqq-holdings-refresh.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

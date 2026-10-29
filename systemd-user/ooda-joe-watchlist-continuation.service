@@ -1,0 +1,14 @@
+[Unit]
+Description=Continue Joe watching reviews with durable receipts and study rate limits
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/nanoclaw-v2
+ExecStart=%h/nanoclaw-v2/scripts/ops/with_run.sh ooda-joe-watchlist-continuation --log %h/nanoclaw-v2/logs/watchlist_continuation_joe.log --timeout 45 -- /usr/bin/python3 %h/nanoclaw-v2/scripts/watchlist_continuation.py --agent-group-id ag-1779218568490-sdlwy3
+StandardOutput=append:%h/nanoclaw-v2/logs/watchlist_continuation_joe.log
+StandardError=append:%h/nanoclaw-v2/logs/watchlist_continuation_joe.log
+TimeoutStartSec=60
+SuccessExitStatus=3 75
+UMask=0077
+NoNewPrivileges=yes

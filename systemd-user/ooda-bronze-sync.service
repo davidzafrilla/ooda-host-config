@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — bronze-sync
+# Archive AS-IS's live data_collector outputs into data_lake/bronze/ (copy-then-read, zero writes to AS-IS). Paths come from ASIS_DATA_DIR / DATA_LAKE_PATH in .env — same command on every machine.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.bronze_sync
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/bronze-sync.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/bronze-sync.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

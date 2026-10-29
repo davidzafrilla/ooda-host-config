@@ -1,0 +1,11 @@
+[Unit]
+Description=OODA TO-BE — AGENT-PAL/KNOW shadow (Ola 3) — metricas ALE RO, G7.3 checklist, governor fire
+# Solo-lectura sobre produccion AS-IS; report en reports/shadow_pal_know/. Receta paso 5.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/shadow_pal_know_agent.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/shadow-pal_know.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/shadow-pal_know.log
+TimeoutStartSec=900

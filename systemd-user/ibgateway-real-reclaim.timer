@@ -1,0 +1,10 @@
+[Unit]
+Description=Reclamo IB Gateway REAL cada 30 min (06-23h) + 23:47 (pre exec-gate 23:50)
+
+[Timer]
+OnCalendar=*-*-* 06..23:20,50:00
+OnCalendar=*-*-* 23:47:00
+Persistent=false
+
+[Install]
+WantedBy=timers.target

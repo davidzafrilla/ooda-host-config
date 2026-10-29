@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — datalake-status
+# 30-sep-2026 (encargo de David) — estado del data lake para la pestaña «Data Lake» del portal OODA: mide en SOLO LECTURA cada serie (cobertura por mercado, profundidad, frescura, completitud, campos), calcula el cumplimiento con su óptimo y escribe ~/nanoclaw-v2/groups/telegram_inversiones/dashboard/datalake_status.html (+ .json), que el servidor del portal sirve como estático. ~2 min. Si el lake está bloqueado espera hasta 30 min; si no puede medir conserva la página anterior (rc 3). 08:35 L-D: después del ciclo 06:15 y del bronze-sync, antes del daily-pipeline 10:00.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/datalake_status/run.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/datalake-status.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/datalake-status.log
+TimeoutStartSec=2700
+SuccessExitStatus=3 75

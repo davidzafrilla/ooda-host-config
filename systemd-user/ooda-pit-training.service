@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — pit-training
+# 3-oct-2026 (David: capa de entrenamiento PIT) — src/pipelines/pit_training.py: universo diario con liquidez EN t0 (gold_pit_universe_daily), features de precio con las fórmulas de gold_promote (gold_pit_features_daily) y etiquetas triple-barrier v1 idénticas a label_factory (gold_pit_labels) sobre el universo PIT de 5 mercados (S&P 500 histórico + NDX hacia delante; BME / Xetra / París / Ámsterdam completos con elegibilidad top n por liquidez; config/pit_training_universe.yaml). Lee los parquet PIT que pit-universe-refresh deja a las 23:00 (y el consolidado atómico), escribe las tres tablas en una transacción y las exporta a reference/pit/training/ para entrenar en el Mac. Determinista: se reescribe entero cada noche (minutos). rc 3 = precios viejos, elegibilidad corta o paridad con gold_labels < 0,97 (no se escribe); validador validate_pit_training.py en la batería de las 11:00. Diario a las 00:05: tras label-factory (23:50) y antes de news-labels (00:20); no depende de reference-sync.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.pit_training
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/pit-training.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/pit-training.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

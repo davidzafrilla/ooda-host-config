@@ -1,0 +1,11 @@
+[Unit]
+Description=Schedule prospective signal-floor health
+
+[Timer]
+OnCalendar=*-*-* *:0/10:15 UTC
+AccuracySec=1s
+Persistent=false
+Unit=ooda-signal-floor-health.service
+
+[Install]
+WantedBy=timers.target

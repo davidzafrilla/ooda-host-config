@@ -1,0 +1,12 @@
+[Unit]
+Description=Cloudflare Tunnel
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/nanoclaw/.local/bin/cloudflared tunnel --config /home/nanoclaw/.cloudflared/config.yml run paperclip-dashboard
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

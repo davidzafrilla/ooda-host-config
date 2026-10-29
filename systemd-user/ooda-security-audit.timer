@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer — auditoría de seguridad completa 04:50 (fuera de las ventanas del ciclo 06:00-08:30 y del lake 09:00-10:45)
+
+[Timer]
+OnCalendar=*-*-* 04:50:00
+# Persistent=false: ~17 min de CPU (trivy); si el M5 estaba apagado a las 04:50 no se recupera en mercado
+Persistent=false
+
+[Install]
+WantedBy=timers.target

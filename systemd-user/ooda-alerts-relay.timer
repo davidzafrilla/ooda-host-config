@@ -1,0 +1,10 @@
+[Unit]
+Description=ooda-alerts-relay cada 15 min (:05, :20, :35, :50 — tras el ciclo 1m de las 06:15 y sus pasos)
+
+[Timer]
+OnCalendar=*:5/15
+Persistent=false
+Unit=ooda-alerts-relay.service
+
+[Install]
+WantedBy=timers.target

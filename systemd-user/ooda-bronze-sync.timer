@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA TO-BE — bronze-sync timer
+
+[Timer]
+OnCalendar=Mon,Tue,Wed,Thu,Fri *-*-* 09:45:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=Observe and continue Joe watching batch each weekday minute
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 09..22:*:40 Europe/Madrid
+AccuracySec=1s
+Persistent=false
+
+[Install]
+WantedBy=timers.target

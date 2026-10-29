@@ -1,0 +1,15 @@
+[Unit]
+Description=OODA TO-BE — sector-history (ticker → SPDR por fechas)
+# 22-oct-2026 (David): historial point-in-time ticker → Select Sector SPDR para sector_relative_strength de gold:
+# carteras SSGA de hoy + config/gics_restructurings.yaml + SIC de EDGAR. Escribe data_lake/reference/pit/sector_history.parquet
+# (+ receipt); reference_sync (02:30) lo publica como ref_sector_history. No toca el lake. ~28 min (ritmo de la SEC).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/build_sector_history.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/sector-history.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/sector-history.log
+TimeoutStartSec=3600
+SuccessExitStatus=3

@@ -1,0 +1,11 @@
+[Unit]
+Description=Prospective H-028 shadow reading schedule
+
+[Timer]
+OnCalendar=*-04,10-01..05 07:35:00 Europe/Madrid
+Persistent=false
+AccuracySec=1s
+Unit=ooda-h028-shadow-reading.service
+
+[Install]
+WantedBy=timers.target

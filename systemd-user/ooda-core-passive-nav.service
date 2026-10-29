@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — core-passive-nav
+# 03-oct-2026 (ARCH-019 A4d / F3.1 C3, David) — serie diaria del valor del núcleo pasivo en el lake (src.pipelines.core_passive_nav): los 2 ISIN de config/core_passive_instruments.yaml en dim_tickers (exchange FUND, sin intradía ni etiquetado) y su VL/cierre en fact_prices_daily (fuentes CORE_NAV_YF/CORE_NAV_FT/ CORE_NAV_YQ; silver las excluye). 8-oct-2026 (A4d, propuesta aprobada): ETF por CS1.PA con cotización de respaldo (yahoo_quote) para las barras que Yahoo pierde; FT solo con su «as of». Escribe reference/core_passive_nav_latest.json, que data_core_nav.py (nanoclaw, cron 08:15 mar-sáb) lee como productor único. Mar-sáb 08:05 (recoge el VL de D-1 publicado por FT y el cierre de D-1 de Yahoo). rc 3 = ningún proveedor dio dato nuevo (fail-soft; lo recoge el supervisor), rc 75 = lake bloqueado. Drill F3.1 del sáb 3-oct: C3 falló por estos 2 ISIN.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.core_passive_nav
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/core-passive-nav.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/core-passive-nav.log
+TimeoutStartSec=900
+SuccessExitStatus=3 75

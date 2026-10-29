@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — check-data-contracts
+# Contratos de los JSON de datos de los agentes (auditoría 27-sep-2026) contra TO-BE/03_CONTRACTS/json_file_contracts.yaml: forma y tipos, cobertura de mapas de entidades, claves ajenas o de metadatos (_*) en mapas de tickers, rangos, antigüedad por mtime Y sello interno (mtime fresco + sello viejo = frozen_internal_timestamp), indicadores muertos de quant_signals.json (allowlist con motivo y revisión) y rutas citadas en los .md de los agentes que ya no existen. logs/data_contracts_last.json (overall degraded con hallazgos high/medium, lo lee alerts_relay: es el aviso); rc 0 si el informe quedó escrito, 3 solo con --no-report. Solo lectura. L-V tras el check-validation-streaks; en fin de semana los productores no corren (holgura weekday_only).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/check_data_contracts.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/check-data-contracts.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/check-data-contracts.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

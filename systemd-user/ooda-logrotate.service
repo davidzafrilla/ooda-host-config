@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA — rotación de logs (D6 retención, 20-sep-2026): tamaño para los grandes, 90 d unidades, 400 d JSONL, 14 d contenedores
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStart=%h/nanoclaw-v2/scripts/ops/logrotate.sh
+StandardOutput=append:%h/nanoclaw-v2/logs/logrotate.log
+StandardError=inherit

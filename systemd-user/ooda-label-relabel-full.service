@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — label-relabel-full
+# 02-oct-2026 (David, Momento C) — recomputo COMPLETO mensual de gold_labels (src.pipelines.label_factory --full-relabel). La fabrica diaria solo da de alta t0 nuevas y madura pendientes; nunca vuelve sobre una etiqueta madurada, pero cada noche reemplaza la serie ENTERA de los benchmarks (EODHD revisa su historia) y los precios se rebasan (29-ago). Ensayo en la replica del 2-oct: 1.721 de 1.187.906 etiquetas cambiaban y 109 ya no se generaban. Dia 1 a las 04:30: tras label-factory (23:50), news-labels (00:20/00:40), reference-sync (02:30), sync-to-replica (03:00) y logrotate (03:40), antes de wf-substrate-refresh (06:20) y del ciclo intradia (06:15 L-V, que lee gold_labels) = antes de cada reentreno. Copia previa gold_labels_bak_pre_relabel_<fecha> (se niega si ya existe la del dia), transaccion unica, diff frente a la copia en el log.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.label_factory --full-relabel
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/label-relabel-full.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/label-relabel-full.log
+TimeoutStartSec=3600
+SuccessExitStatus=3 75

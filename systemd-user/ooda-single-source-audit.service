@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — single-source-audit
+# Auditoría diaria de FUENTE ÚNICA contra TO-BE/03_CONTRACTS/data_contracts.yaml: réplica del Mac (sello < 26 h y 444), entradas rancias, mismo script en crontab y en tareas de NanoClaw, scripts homónimos entre repos, timers fuera del manifiesto o sin supervisión, dualidades con plazo vencido. rc 3 si hay hallazgos (el supervisor avisa). Lake único, 27-sep-2026 (F2).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/single_source_audit.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/single-source-audit.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/single-source-audit.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA TO-BE — concept-shadow-compare timer
+
+[Timer]
+OnCalendar=Mon,Tue,Wed,Thu,Fri *-*-* 12:30:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

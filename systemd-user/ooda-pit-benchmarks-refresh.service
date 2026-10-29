@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — pit-benchmarks-refresh
+# 27-sep-2026 — pit_benchmarks.parquet (SPY.US + IBEX.INDX, 1990→, EODHD eod) → ref_pit_benchmarks (reference-sync 02:30). Lo leen h011/h017 y el meta-labeler v2; su último productor fue /OODA build_pit_labels.py (21-ago, nunca programado). Historia COMPLETA cada vez (2 llamadas, segundos): el adjusted_close de SPY se reajusta hacia atrás con cada dividendo. Si un benchmark falla o encoge conserva el anterior y sale con rc 3. Cerrojo propio, no choca con pit-universe-refresh (23:00).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/build_pit_universe.py --benchmarks
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/pit-benchmarks-refresh.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/pit-benchmarks-refresh.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

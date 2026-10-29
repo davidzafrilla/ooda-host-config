@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — macro-sync
+# Auditoría del lake 27-sep-2026, orden 6b — FRED (31 series: mercado + publicadas, incl. empleo, inflación subyacente, NFCI, curva, IG; desde el 28-sep tipos DEXUSEU/DEXTAUS/DEXCHUS para los ADR de gold) y BCE → fact_macro_indicators (revisado; histórico completo de las truncadas) y silver_macro_pit (primera publicación con su fecha real; mercado = t+1).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.macro_sync
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/macro-sync.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/macro-sync.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — execution-quality
+# RFC-0004 §10.4 (sub-fase 4d) — calidad de ejecución fill a fill: silver_fills (ledger real + libro PAPER, con hora exacta de IBKR cuando existe) y gold_execution_quality (shortfall frente a señal, llegada, mid, VWAP y cierre; spread BID_ASK, ADV20, RVOL, franja de sesión, quality_flag). Se reconstruye entero; después del daily-pipeline, cuando ya están las barras 1 min del día anterior. Entradas desde platform-sync (01:10).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/src/pipelines/execution_quality.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/execution-quality.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/execution-quality.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

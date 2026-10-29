@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA — relay de ALERTS.log y estados *_last.json del lake al agente dueño (S0 supervisión, 20-sep-2026) — inyecta a Lex con label [auth:cron-supervisor]
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/python3 %h/nanoclaw-v2/scripts/ops/alerts_relay.py --agent Lex
+StandardOutput=append:%h/nanoclaw-v2/logs/alerts_relay.log
+StandardError=inherit

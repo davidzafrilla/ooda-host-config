@@ -1,0 +1,12 @@
+[Unit]
+Description=Xvfb Virtual Display
+Before=ibgateway.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/Xvfb :99 -screen 0 1920x1080x24 -ac
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

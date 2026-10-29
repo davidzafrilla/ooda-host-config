@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — pit-fundamentals-us
+# 23-oct-2026 (F4.2 CONGELADO, reports/preregistro-tabla-fundamentales-pit-us-20261023.md §3; D-b de David) — src/pipelines/pit_fundamentals_us.py: productor semanal de pit_fundamentals_us_versions.parquet (fundamentales anuales 10-K por valor con known_from, reglas de F4.0). Descarga companyfacts de la SEC (SEC_USER_AGENT) a un bronze por contenido; si hay cambios retrospectivos (hechos conocidos que cambian o desaparecen, o filed anterior a la última ejecución aceptada) no publica y sale con rc 3 (cuarentena, decide David). Recibo .receipt.json y pasada en logs/pit_producer_runs.jsonl (la acredita el constructor diario).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/src/pipelines/pit_fundamentals_us.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/pit-fundamentals-us.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/pit-fundamentals-us.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

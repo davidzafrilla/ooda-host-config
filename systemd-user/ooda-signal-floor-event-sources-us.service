@@ -1,0 +1,15 @@
+# 29-oct-2026 (OK de David, instalación parcial): colector diario de fuentes oficiales para el censo de eventos (US).
+# Código en review_tools (aprobado en scripts/ops/frozen_runtimes.json); no toca los scripts fijados por el protocolo.
+[Unit]
+Description=Signal-floor event sources US; official filings capture, no orders or messages
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/nanoclaw-v2/data/signal-floor-followup-runtime
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+Nice=10
+TimeoutStartSec=1800
+Environment=PYTHONPATH=%h/nanoclaw-v2/data/signal-floor-followup-runtime/scripts
+ExecStart=/usr/bin/python3 %h/nanoclaw-v2/data/signal-floor-followup-runtime/review_tools/signal_floor_event_sources.py --archive %h/nanoclaw-v2/data/signal-floor-followup/archive --protocol %h/nanoclaw-v2/data/signal-floor-followup-runtime/config/signal_floor_followup.json --config %h/nanoclaw-v2/data/signal-floor-followup-runtime/config/signal_floor_event_sources.json --market US --date auto --env-file %h/ooda-tobe/.env

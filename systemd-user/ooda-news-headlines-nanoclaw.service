@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — news-headlines-nanoclaw
+# Titulares de NanoClaw (news_sentiment.json: titular + enlace + feed) a fact_news_headlines_nanoclaw, concepto propio (B5-b, 27-sep-2026). NanoClaw solo guarda 10 por ticker y los rota: se captura tras cada data_news (07:05, 14:10, 15:20, 22:00; sábado 09:45). Idempotente por (url, ticker).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/load_news_headlines_nanoclaw.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/news-headlines-nanoclaw.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/news-headlines-nanoclaw.log
+TimeoutStartSec=5400
+SuccessExitStatus=3 75

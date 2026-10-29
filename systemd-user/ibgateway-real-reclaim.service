@@ -1,0 +1,12 @@
+[Unit]
+Description=Reclama IB Gateway REAL 4001 si esta caido (cede sesion al movil; ver restart.conf)
+
+[Service]
+Type=oneshot
+# 01-sep-2026: flag PROPIO (.ibgateway-real-reclaim-disabled). Antes miraba
+# .ibgateway-real-disabled (el del monitor ibgw-monitor.sh, presente desde 8-ago)
+# y por eso el reclamo NUNCA actuo: salia con "skip" en cada fire.
+# 1-oct-2026: el reclamo vive en ~/ibkr/ibgw-real-guard.sh --reclaim: relanza si la unidad cayó (igual que antes) y
+# reinicia si está activa pero 4001 no escucha y el login está colgado sin 2FA pendiente (30-sep 23:45).
+SuccessExitStatus=3
+ExecStart=/bin/bash /home/nanoclaw/ibkr/ibgw-real-guard.sh --reclaim

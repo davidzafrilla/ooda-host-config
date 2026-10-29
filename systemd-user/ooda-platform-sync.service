@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — platform-sync
+# Auditoría del lake 27-sep-2026, punto 4 — datos que genera la plataforma (scores_history, decision_audit, propuestas del PM, predicciones de Kairos, atribución, alertas con resultado, simulaciones de reglas, paper tracker, signal_outcomes_current) → bronze_platform_events + silver_platform_scores + vistas v_platform_*. Incremental por offset, idempotente por hash; espera si el lake está bloqueado. Todos los días tras los escritores de la noche.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.platform_sync
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/platform-sync.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/platform-sync.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

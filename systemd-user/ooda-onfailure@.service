@@ -1,0 +1,6 @@
+[Unit]
+Description=OODA OnFailure collector for %i (FASE0 F0.9 / OBS-002)
+
+[Service]
+Type=oneshot
+ExecStart=%h/nanoclaw-v2/scripts/onfailure-collector.sh %i

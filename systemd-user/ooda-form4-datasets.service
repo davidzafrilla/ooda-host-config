@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — form4-datasets
+# Auditoría del lake 27-sep-2026, punto 5 — SEC Insider Transactions Data Sets (Form 4, 2006q1→; trimestrales) → data_lake/reference/insiders/ form4_nonderiv.parquet + form4_submissions.parquet (builder de H-013). Los zips ya descargados no se vuelven a pedir. Semanal.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/build_form4_sec_datasets.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/form4-datasets.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/form4-datasets.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

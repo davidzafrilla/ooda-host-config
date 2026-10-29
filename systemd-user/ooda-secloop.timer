@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer — secloop cada 4 h a :23 (00:23, 04:23, …; área = (epoch_h // 4) % 7 + 1); sin Persistent: una pasada perdida se recupera en la siguiente rotación
+
+[Timer]
+OnCalendar=*-*-* 00/4:23:00
+Persistent=false
+
+[Install]
+WantedBy=timers.target

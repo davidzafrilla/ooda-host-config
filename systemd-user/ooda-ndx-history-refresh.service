@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — ndx-history-refresh
+# 3-oct-2026 (opción A1, David: «OK al orden») — scripts/build_ndx_history.py: pertenencia histórica al Nasdaq-100 reconstruida hacia atrás desde la composición actual de EODHD con la tabla pública de cambios (Wikipedia, que cita las notas de Nasdaq; feb-2007 →). Valida 98-108 líneas en cada fecha y 0 inconsistencias (si no, rc 3 y no escribe) → pit_ndx_history.parquet, que pit-membership-refresh (12:00) superpone como índice NDX. 2 llamadas (Wikipedia + EODHD), segundos. Semanal, antes de la pertenencia.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/build_ndx_history.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/ndx-history-refresh.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/ndx-history-refresh.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

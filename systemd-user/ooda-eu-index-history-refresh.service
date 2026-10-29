@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — eu-index-history-refresh
+# 4-oct-2026 (opción A5, David 3-oct: «OK al orden») — scripts/build_eu_index_history.py: pertenencia histórica a Euro Stoxx 50, DAX y AEX por las carteras diarias de los ETF de iShares de réplica física (SX5E dic-2006 →, DAX jun-2006 →, AEX dic-2006 →; fin de mes + bisección por días hasta la fecha exacta de cada cambio; cada línea casada con su código EODHD verificando el precio) y CAC 40 por la tabla de cambios de la Wikipedia francesa (1988 →) reconstruida hacia atrás desde la composición actual de EODHD (39-41 líneas en toda fecha) → pit_eu_index_history.parquet, que pit-membership-refresh (12:00) superpone. Caché en data_lake/bronze/eu_index: cada semana solo baja las carteras nuevas. Casado < 98 % o inconsistencias en el CAC → rc 3 y no escribe.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/build_eu_index_history.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/eu-index-history-refresh.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/eu-index-history-refresh.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

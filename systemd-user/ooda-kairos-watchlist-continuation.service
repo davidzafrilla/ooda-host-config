@@ -1,0 +1,13 @@
+[Unit]
+Description=Continue Kairos watching studies from durable cursor (R14)
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/nanoclaw-v2
+ExecStart=%h/nanoclaw-v2/scripts/ops/with_run.sh ooda-kairos-watchlist-continuation --log %h/nanoclaw-v2/logs/watchlist_continuation.log --timeout 45 -- /usr/bin/python3 %h/nanoclaw-v2/scripts/watchlist_continuation.py
+StandardOutput=append:%h/nanoclaw-v2/logs/watchlist_continuation.log
+StandardError=append:%h/nanoclaw-v2/logs/watchlist_continuation.log
+TimeoutStartSec=60
+SuccessExitStatus=3 75
+UMask=0077
+NoNewPrivileges=yes

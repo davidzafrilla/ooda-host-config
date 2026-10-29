@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — google-trends
+# 28-sep-2026 (encargo de David) — Google Trends: SVI semanal por ticker (config/google_trends_terms.yaml; ventana única de 5 años por descarga) → bronze/google_trends/<fecha>/ → silver_google_trends (cada descarga es una vintage; known_from = max(fin de semana + 1, descarga)) → gold_search_attention (ASVI de Da et al. 2011). Refresco SEMANAL POR TÉRMINO con unidad diaria y tope de 100 peticiones (~45 términos) por corrida: el backfill de 5 años de ~210 términos se reparte solo en ~5 días y se reanuda por cursor (bronze). 429 → backoff y fail-soft; 3 términos seguidos con 429 = bloqueo → rc 3. Staging-first: la red no toca el lake. FUERA de todo scoring (pre-registro H-028 en borrador). 13:20 L-D: fuera de las ventanas del lake (23:00-05:30 L-V, dom 20:00) y lejos del ciclo 06:15 y del daily-pipeline 10:00.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.google_trends
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/google-trends.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/google-trends.log
+TimeoutStartSec=3600
+SuccessExitStatus=3 75

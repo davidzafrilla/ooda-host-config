@@ -1,0 +1,15 @@
+[Unit]
+Description=OODA TO-BE — AGENT-DATA-001 shadow (Ola 1)
+# Barrido diario de calidad de datos (contrato §4.2 como código, ADR-0003 R2):
+# freshness + anti-freeze I-38 + anti-drift cached-vs-canonical sobre los
+# outputs de producción AS-IS (solo-lectura). Compare-report en
+# reports/shadow_data/. Crosswalk: TO-BE/20_MIGRATION/2026-08-17-ola1-crosswalk-data.md
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/shadow_data_agent.py
+ExecStartPost=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/shadow_data_wake.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/shadow-data.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/shadow-data.log
+TimeoutStartSec=600

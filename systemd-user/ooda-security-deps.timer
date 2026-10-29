@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer — CVE nuevos sobre lo desplegado cada hora a :37 (OSV en vivo + CISA KEV)
+
+[Timer]
+OnCalendar=*-*-* *:37:00
+Persistent=false
+
+[Install]
+WantedBy=timers.target

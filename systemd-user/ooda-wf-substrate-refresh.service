@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — wf-substrate-refresh
+# 01-oct-2026 (David) — refresco mensual del sustrato PIT del walk-forward de gobernanza (nanoclaw-v2 groups/telegram_inversiones/data/ ohlv_history_daily_30y_pit.json) con ref_pit_prices del lake (solo lectura; cae a la replica si el vivo esta ocupado) y el OHLV nocturno, encadenando RENTABILIDADES (el cierre del lake cambia de base en splits). El sustrato llevaba congelado desde el 9-jul y el walk-forward mensual (cron del host 07:00 del dia 1, scripts/wf_monthly_pit.py) repetia la misma muestra cada mes (sep 0,6862 / oct 0,2342 = dos recortes de la misma muestra). Corre el dia 1 a las 06:20, tras pit-universe-refresh (23:00 L-V) y reference-sync (02:30) y antes del walk-forward, que aborta (rc 3) si el sustrato tiene mas de 45 dias. El script vive en nanoclaw-v2 (host) junto al wrapper del walk-forward; ruta absoluta. rc 3 = lake inaccesible (degradado: lo recoge el supervisor desde runs.jsonl, convencion D10), rc 4 = fin de datos > 5 dias (fallo real -> OnFailure, DM a David). En ambos casos el sustrato no se toca.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/nanoclaw-v2/scripts/extend_pit_substrate.py --apply --max-age-days 5
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/wf-substrate-refresh.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/wf-substrate-refresh.log
+TimeoutStartSec=1500
+SuccessExitStatus=3 75

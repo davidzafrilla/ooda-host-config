@@ -1,0 +1,18 @@
+[Unit]
+Description=OODA — registro del embudo PAPER del día y resultado posterior de los rechazados (broker/funnel.py; embudo paper, paquete A, 24-oct-2026). Solo registra: nunca decide, nunca envía órdenes.
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/nanoclaw-v2/groups/telegram_inversiones/scripts
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStartPre=-%h/nanoclaw-v2/scripts/ops/record_run.sh start %n
+# -P: ni cwd ni el directorio del script entran en sys.path (integrity.py); ruta absoluta al __main__.
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/groups/telegram_inversiones/scripts/broker/__main__.py funnel
+ExecStopPost=-%h/nanoclaw-v2/scripts/ops/record_run.sh end %n
+Environment=OODA_RUN_LOG=%h/nanoclaw-v2/groups/telegram_inversiones/logs/paper_funnel.log
+StandardOutput=append:%h/nanoclaw-v2/groups/telegram_inversiones/logs/paper_funnel.log
+StandardError=append:%h/nanoclaw-v2/groups/telegram_inversiones/logs/paper_funnel.log
+# 4 = código alterado (integrity) o configuración inválida: falla → OnFailure.
+TimeoutStartSec=600
+Nice=10

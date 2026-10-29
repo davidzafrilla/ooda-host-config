@@ -1,0 +1,15 @@
+[Unit]
+Description=OODA — rele loopback IB Gateway para contenedores (172.17.0.1:4011→4001, 4012→4002)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+ExecStart=/usr/bin/python3 scripts/corte_exec/ibkr_loopback_relay.py
+Restart=always
+RestartSec=5
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/ibkr-relay.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/ibkr-relay.log
+
+[Install]
+WantedBy=default.target

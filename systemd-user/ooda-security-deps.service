@@ -1,0 +1,18 @@
+[Unit]
+Description=OODA — cada hora: CVE nuevos sobre lo desplegado (OSV + CISA KEV) y secretos (gitleaks incremental, .env, commits purgados reintroducidos), 26-oct-2026 (scripts/ops/security_audit.py)
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStartPre=-%h/nanoclaw-v2/scripts/ops/record_run.sh start %n
+# el cerrojo (state/ops/security.lock → 75) lo toma el propio script: también protege las pasadas a mano
+Nice=10
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/scripts/ops/security_audit.py --only deps,secrets
+ExecStopPost=-%h/nanoclaw-v2/scripts/ops/record_run.sh end %n
+Environment=OODA_RUN_LOG=%h/nanoclaw-v2/logs/ops/security_audit.log
+StandardOutput=append:%h/nanoclaw-v2/logs/ops/security_audit.log
+StandardError=append:%h/nanoclaw-v2/logs/ops/security_audit.log
+# 3 = nuevo med/low o comprobación no disponible · 75 = cerrojo · 4 = nuevo high/crit → OnFailure (DM) + R1 (ticket)
+SuccessExitStatus=3 75
+TimeoutStartSec=900

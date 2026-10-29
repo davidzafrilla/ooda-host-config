@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — check-table-freshness
+# Frescura por tabla del lake contra TO-BE/03_CONTRACTS/table_freshness.yaml (auditoría 27-sep-2026): stale_table (por universo/mercado cuando la tabla los mezcla; high en precios, gold features y 1 min), empty_table, output_behind_input (salida > 1 sesión por detrás de su entrada), unscheduled_refresh y frozen (info). Sesión esperada = la de la última pasada del productor (calendario L-V con festivos US/ES): el lunes no se exige el viernes hasta el pipeline de las 10:00. logs/table_freshness_last.json (overall degraded, lo lee alerts_relay: es el aviso); rc 0 si el informe quedó escrito, 3 solo con --no-report, 75 si el lake sigue bloqueado. Solo lectura. Tras el daily-pipeline (10:00).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/check_table_freshness.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/check-table-freshness.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/check-table-freshness.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

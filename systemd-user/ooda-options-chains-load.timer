@@ -1,0 +1,12 @@
+[Unit]
+Description=OODA — reintento horario de carga de opciones, sin recaptura
+
+[Timer]
+# 19-oct-2026 (David): sin la pasada de las 06:45, que caía siempre dentro de ooda-intraday-cycle (lake ocupado,
+# rc 75 lock cada laborable desde el 6-oct); la de las 07:45 ya la recuperaba entera. Copia previa en
+# ~/archivo/2026-10/options-timer/.
+OnCalendar=*-*-* 00..05,07..23:45:00 Europe/Madrid
+Persistent=false
+
+[Install]
+WantedBy=timers.target

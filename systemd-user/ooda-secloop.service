@@ -1,0 +1,23 @@
+[Unit]
+Description=OODA — loop LLM de auditoría de seguridad por áreas (7 áreas, una cada 4 h) en contenedor ooda-secloop, 26-oct-2026 (scripts/ops/secloop_run.py)
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+# modelo/esfuerzo medidos el 26-oct (docs/secloop.md); cambiar aquí, no en el script
+Environment=SECLOOP_MODEL=claude-sonnet-5-5
+Environment=SECLOOP_MODEL_ESCALATE=claude-opus-5-5
+Environment=SECLOOP_EFFORT=medium
+Environment=SECLOOP_BUDGET_USD=4
+Environment=SECLOOP_MAX_TURNS=40
+ExecStartPre=-%h/nanoclaw-v2/scripts/ops/record_run.sh start %n
+Nice=10
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/scripts/ops/secloop_run.py
+ExecStopPost=-%h/nanoclaw-v2/scripts/ops/record_run.sh end %n
+Environment=OODA_RUN_LOG=%h/nanoclaw-v2/logs/ops/secloop.log
+StandardOutput=append:%h/nanoclaw-v2/logs/ops/secloop.log
+StandardError=append:%h/nanoclaw-v2/logs/ops/secloop.log
+# 3 = hallazgos med/low o pasada degradada · 75 = cerrojo · 4 = high/crit confirmados → OnFailure (DM) + R1 (ticket)
+SuccessExitStatus=3 75
+TimeoutStartSec=3300

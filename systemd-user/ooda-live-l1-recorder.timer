@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA TO-BE — live-l1-recorder timer
+
+[Timer]
+OnCalendar=Mon,Tue,Wed,Thu,Fri *-*-* 09:05:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

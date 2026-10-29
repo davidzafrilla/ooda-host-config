@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA TO-BE — fetch-cnmv-docs timer
+
+[Timer]
+OnCalendar=Mon,Tue,Wed,Thu,Fri,Sat,Sun *-*-* 20:40:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

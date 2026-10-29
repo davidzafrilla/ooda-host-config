@@ -1,0 +1,11 @@
+[Unit]
+Description=OODA TO-BE — AGENT-GOV-001 shadow (Ola 2) — verificacion de citas en escalados de Pol, censo A2A, recibos
+# Crosswalk: TO-BE/20_MIGRATION/2026-08-22-ola2-crosswalk-gov.md (receta paso 5). Solo-lectura sobre produccion AS-IS; report en reports/shadow_gov/.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/shadow_gov_agent.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/shadow-gov.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/shadow-gov.log
+TimeoutStartSec=600

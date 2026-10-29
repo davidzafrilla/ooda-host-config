@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — event-lite
+# Auditoría del lake 27-sep-2026, punto 5 — EventLite (marco §90, RFC-0004 §10.3): 8-K de la SEC (tickers US del lake, desde 2004, hora de aceptación e items) + CNMV (histórico X2 desde 2019 + silver_cnmv_news) → silver_corporate_events, y reacción de mercado diaria e intradía en exceso → gold_event_reactions. Las filas no maduras se recalculan cada noche.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.event_lite
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/event-lite.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/event-lite.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

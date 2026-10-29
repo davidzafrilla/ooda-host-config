@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — splits
+# Auditoría del lake 27-sep-2026 — historial de splits (yfinance) → silver_splits. Gold lo usa para llevar el close del lake (ajustado por splits a la base de hoy) a la base de acciones de cada informe XBRL. Antes del daily-pipeline (10:00), que reconstruye gold.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/fetch_splits_yfinance.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/splits.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/splits.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

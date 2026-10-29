@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — pit-splits-refresh
+# 20-oct-2026 (reports/limpieza_pit_prices_20261020) — splits de EODHD (endpoint splits, 1990→) para todos los códigos de pit_membership, una llamada por código (~4.600, unos 40 min a --pace 0.15) → pit_splits.parquet con recibo. Los lee scripts/pit_price_quarantine.py (splits_report: qué cambios del factor adj_close/close tienen split registrado). Semanal, tras pit-membership-refresh (12:00) para que los códigos nuevos entren el mismo sábado. Si un código falla o devuelve menos splits que antes conserva lo anterior y sale con rc 3 (Degraded) después de escribir el resto. Cerrojo propio (.pit_splits.lock).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/build_pit_universe.py --splits
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/pit-splits-refresh.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/pit-splits-refresh.log
+TimeoutStartSec=5400
+SuccessExitStatus=3 75

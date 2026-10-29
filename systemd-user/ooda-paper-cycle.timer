@@ -1,0 +1,13 @@
+[Unit]
+Description=Timer — ciclo IBKR PAPER cada 5 min 08:00-22:55 L-V + cierre 23:05; fines de semana cada 10 min 08-22h (Europe/Madrid)
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 08..22:00/5:00
+OnCalendar=Mon..Fri *-*-* 23:05:00
+# Fin de semana: sin decisiones nuevas, pero la web no debe quedar STALE (umbral 15 min) ni dejar de reconciliar.
+OnCalendar=Sat,Sun *-*-* 08..22:00/10:00
+Persistent=false
+RandomizedDelaySec=20
+
+[Install]
+WantedBy=timers.target

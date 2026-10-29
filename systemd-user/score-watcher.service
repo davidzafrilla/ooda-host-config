@@ -1,0 +1,13 @@
+[Unit]
+Description=NanoClaw Score Watcher (v2) — tail-f decision_audit.jsonl → episodic_memory
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/scripts/memory
+ExecStart=/usr/bin/python3 /home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/scripts/memory/score_watcher.py
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target

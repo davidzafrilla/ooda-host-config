@@ -1,0 +1,11 @@
+tunnel: 6c849f92-2aa3-4bec-81e4-20ea032b9a2a
+credentials-file: /home/nanoclaw/.cloudflared/6c849f92-2aa3-4bec-81e4-20ea032b9a2a.json
+
+ingress:
+  - hostname: health.davidzafrilla.com
+    service: http://localhost:7600
+  - hostname: ssh.davidzafrilla.com
+    service: ssh://localhost:22
+  - hostname: dashboard.davidzafrilla.com
+    service: http://localhost:8080
+  - service: http_status:404

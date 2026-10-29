@@ -1,0 +1,11 @@
+[Unit]
+Description=Prospective H-028 LYXIB reading schedule
+
+[Timer]
+OnCalendar=*-04,10-01..05 07:40:00 Europe/Madrid
+Persistent=false
+AccuracySec=1s
+Unit=ooda-h028-lyxib-reading.service
+
+[Install]
+WantedBy=timers.target

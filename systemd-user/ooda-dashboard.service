@@ -1,0 +1,15 @@
+[Unit]
+Description=OODA Investment Dashboard (port 8080)
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -u dashboard/serve_dashboard.py
+WorkingDirectory=/home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones
+Restart=always
+RestartSec=5
+Environment=HOME=/home/nanoclaw
+Environment=PATH=/usr/local/bin:/usr/bin:/bin:/home/nanoclaw/.local/bin
+
+[Install]
+WantedBy=default.target

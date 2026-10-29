@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# wifi-rescue on|off — activa/desactiva la WiFi del BOSGAME (BOSGAME_RUNBOOK B2.10). Solo para rescate si la LAN no responde.
+set -e
+[ "$(id -u)" = 0 ] || { echo "ejecutar con sudo"; exit 1; }
+WIFI_IF="$(ls /sys/class/net | grep -E '^wl' | head -1 || true)"
+case "${1:-}" in
+  on)  cp /etc/netplan/disabled/90-wifi.yaml /etc/netplan/90-wifi.yaml; chmod 600 /etc/netplan/90-wifi.yaml
+       netplan apply; sleep 8; ip -4 -br addr show "$WIFI_IF" ;;
+  off) rm -f /etc/netplan/90-wifi.yaml; netplan apply; [ -n "$WIFI_IF" ] && ip link set "$WIFI_IF" down 2>/dev/null || true; echo "WiFi off" ;;
+  *)   echo "uso: wifi-rescue on|off"; exit 2 ;;
+esac

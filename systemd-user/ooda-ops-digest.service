@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA — resumen diario de supervisión a David 08:30 L-V (D4) con heartbeat; el lunes añade el semanal (vencidos, métricas)
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=XDG_RUNTIME_DIR=/run/user/1001
+ExecStart=/usr/bin/python3 %h/nanoclaw-v2/scripts/ops/ops_supervisor.py --digest auto
+StandardOutput=append:%h/nanoclaw-v2/logs/ops_supervisor.log
+StandardError=inherit
+# 27-sep-2026: rc 75 = cerrojo ocupado (otra pasada del supervisor/digest en curso; docs/ops-exit-codes.md): no es un
+# fallo → sin OnFailure; record_run.sh lo registra como status=lock (EXIT_STATUS=75 con SERVICE_RESULT=success).
+SuccessExitStatus=75

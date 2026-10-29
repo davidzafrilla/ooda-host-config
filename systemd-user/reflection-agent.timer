@@ -1,0 +1,11 @@
+[Unit]
+Description=OODA B5.19 reflection_agent timer — nightly at 02:00 Europe/Madrid (DST-safe)
+Requires=reflection-agent.service
+
+[Timer]
+OnCalendar=*-*-* 02:00:00 Europe/Madrid
+Persistent=true
+Unit=reflection-agent.service
+
+[Install]
+WantedBy=timers.target

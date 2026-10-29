@@ -1,0 +1,6 @@
+[Unit]
+Description=OODA OnFailure selftest — always fails (FASE0 F0.9 negative test; start by hand only)
+
+[Service]
+Type=oneshot
+ExecStart=/bin/false

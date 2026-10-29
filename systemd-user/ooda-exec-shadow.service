@@ -1,0 +1,11 @@
+[Unit]
+Description=OODA TO-BE — AGENT-EXEC-001 shadow (Ola 4) — dry-run contra fills reales, I-42, dedup exec_id
+# Solo-lectura sobre produccion AS-IS; report en reports/shadow_exec/. Receta paso 5.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/shadow_exec_agent.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/shadow-exec.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/shadow-exec.log
+TimeoutStartSec=900

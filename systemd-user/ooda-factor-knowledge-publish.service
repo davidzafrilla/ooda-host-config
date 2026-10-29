@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — factor-knowledge-publish
+# Digest del registro de factores (data/factor_registry/registry.jsonl + reports/registro-hipotesis.md) publicado a lo que montan los agentes (nanoclaw-v2/reports = ledger; telegram_inversiones/data), solo si cambia el contenido. Antes se generaba en el Mac y las copias se quedaron en el 20-sep (27-sep-2026).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/bin/bash /home/nanoclaw/ooda-tobe/scripts/publish_factor_knowledge.sh
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/factor-knowledge-publish.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/factor-knowledge-publish.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

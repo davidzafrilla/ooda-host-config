@@ -1,0 +1,7 @@
+# 29-oct-2026: tras el cierre y antes del corte de decisión (23:59:59 New York).
+[Timer]
+OnCalendar=Mon..Fri 17:30 America/New_York
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=ooda-supervisor cada 10 min (:02, :12, … — desfasado del relay :05/15)
+
+[Timer]
+OnCalendar=*:02/10
+Persistent=false
+Unit=ooda-supervisor.service
+
+[Install]
+WantedBy=timers.target

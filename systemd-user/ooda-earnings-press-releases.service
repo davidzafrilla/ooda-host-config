@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — earnings-press-releases
+# Auditoría del lake 27-sep-2026, orden 3b — texto del comunicado de resultados (anexo 99 de cada 8-K 2.02 de EventLite) → bronze/sec_8k_ex99 + silver_earnings_press_releases. Descarga sin el lake abierto, carga corta; cada noche solo los nuevos (tras event-lite 01:30).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/fetch_earnings_press_releases.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/earnings-press-releases.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/earnings-press-releases.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

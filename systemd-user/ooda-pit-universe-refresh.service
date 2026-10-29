@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — pit-universe-refresh
+# 2026-08-23 — refresco de precios EODHD del universo PIT (scripts/build_pit_universe.py --prices --refresh: ultimos 30 dias de los codigos vivos) + consolidado. Los deslistados no cambian. 27-sep-2026: de semanal (dom 12:00) a DIARIO L-V 23:00 (~10 min), antes de market-breadth (23:35) y label-factory (23:50). Con el refresco semanal, US_PIT/ES_PIT llegaban hasta 7 dias tarde y label_factory arrastraba el valor del viernes (L-X) y luego caia al proxy NASDAQ/IBEX (J-V), con otro nivel: salto de fuente en regime_breadth, no de mercado.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/build_pit_universe.py --prices --refresh
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/pit-universe-refresh.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/pit-universe-refresh.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

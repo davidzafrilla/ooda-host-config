@@ -1,0 +1,19 @@
+[Unit]
+Description=IB Gateway (Interactive Brokers)
+After=xvfb.service xfwm4.service
+Requires=xvfb.service xfwm4.service
+
+[Service]
+Type=simple
+Environment=DISPLAY=:99
+# Credentials read by IBC from config.ini (chmod 600), not passed via argv,
+# so they no longer appear in ps aux.
+ExecStart=/bin/bash /home/nanoclaw/ibkr/ibc/scripts/ibcstart.sh 10.45 --gateway --tws-path=/home/nanoclaw/ibkr/Jts --tws-settings-path=/home/nanoclaw/ibkr/settings --ibc-path=/home/nanoclaw/ibkr/ibc --ibc-ini=/home/nanoclaw/ibkr/ibc/config.ini --mode=paper --on2fatimeout=exit
+EnvironmentFile=/home/nanoclaw/ibkr/env
+KillMode=control-group
+TimeoutStopSec=20
+Restart=on-failure
+RestartSec=60
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA TO-BE — quotes-campaign timer
+
+[Timer]
+OnCalendar=Mon,Tue,Wed,Thu,Fri,Sat,Sun *-*-* 09:35:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

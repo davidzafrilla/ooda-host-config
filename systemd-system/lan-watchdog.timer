@@ -1,0 +1,8 @@
+[Unit]
+Description=OODA lan-watchdog cada 20 s
+[Timer]
+OnBootSec=60
+OnUnitActiveSec=20
+AccuracySec=5
+[Install]
+WantedBy=timers.target

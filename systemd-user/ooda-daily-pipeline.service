@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — daily-pipeline
+# Silver/gold promote for the day's newly-synced bronze data.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.daily
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/daily-pipeline.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/daily-pipeline.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

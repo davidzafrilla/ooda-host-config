@@ -1,0 +1,16 @@
+[Unit]
+Description=OODA TO-BE — ciclo diario 1m (catch-up IBKR + 4b + suite 13 + meta-labeler) — ACTIVO en producción (M5) desde el 19-sep-2026; rc 3 si overall≠ok (S0 20-sep); avisos vía ooda-alerts-relay [auth:cron-supervisor]
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+Environment=OODA_ROOT=/home/nanoclaw/ooda-tobe
+Environment=PATH=/usr/sbin:/usr/local/bin:/usr/bin:/bin
+# 27-sep-2026: el gateway real (4001) entra con un usuario sin suscripciones de datos; el backfill 1m usa el paper
+# (4002), que comparte las suscripciones de davidclaw. Era el drop-in cycle-port-4002.conf; versionado aquí el
+# 28-sep. Vuelta atrás: CYCLE_PORT=4001, copiar a ~/.config/systemd/user y daemon-reload.
+Environment=CYCLE_PORT=4002
+ExecStart=/bin/bash /home/nanoclaw/ooda-tobe/scripts/daily_intraday_cycle.sh
+TimeoutStartSec=14400
+# 28-sep-2026 (D10): rc 3 = degradado → run_degraded del supervisor + status_degraded de ooda-alerts-relay; no deja
+# la unidad failed ni dispara OnFailure (el mismo episodio salía 4 veces). Los abortos del ciclo salen con rc 1.
+SuccessExitStatus=3

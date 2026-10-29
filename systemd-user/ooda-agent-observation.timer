@@ -1,0 +1,10 @@
+[Unit]
+Description=Collect R11/R12 evidence every five minutes
+
+[Timer]
+OnCalendar=*-*-* *:01/5:15
+AccuracySec=1s
+Persistent=false
+
+[Install]
+WantedBy=timers.target

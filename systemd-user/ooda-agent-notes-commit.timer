@@ -1,0 +1,10 @@
+[Unit]
+Description=OODA OD-06 §10 — diario 23:35: commit de las notas de agente
+
+[Timer]
+OnCalendar=*-*-* 23:35:00
+Persistent=true
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

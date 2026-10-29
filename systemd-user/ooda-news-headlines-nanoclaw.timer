@@ -1,0 +1,12 @@
+[Unit]
+Description=OODA TO-BE — news-headlines-nanoclaw timer
+
+[Timer]
+OnCalendar=Mon,Tue,Wed,Thu,Fri,Sat *-*-* 07:20:00 Europe/Madrid
+OnCalendar=Mon,Tue,Wed,Thu,Fri,Sat *-*-* 14:25:00 Europe/Madrid
+OnCalendar=Mon,Tue,Wed,Thu,Fri,Sat *-*-* 15:35:00 Europe/Madrid
+OnCalendar=Mon,Tue,Wed,Thu,Fri,Sat *-*-* 22:15:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

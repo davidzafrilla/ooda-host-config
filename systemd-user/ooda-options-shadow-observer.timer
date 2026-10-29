@@ -1,0 +1,10 @@
+[Unit]
+Description=Observe each completed quant run for paired options ranking
+
+[Timer]
+OnCalendar=*-*-* *:*:30
+AccuracySec=1s
+Persistent=false
+
+[Install]
+WantedBy=timers.target

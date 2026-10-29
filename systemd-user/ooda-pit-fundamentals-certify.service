@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — pit-fundamentals-certify
+# 23-oct-2026 (F4.2 CONGELADO §6; D-b, D-e de David) — scripts/validate_pit_fundamentals.py: valida el release pit-fundamentals/1 activo (training_fundamentals/) con F0-F8, incluido el recálculo independiente COMPLETO, y deja el certificado ooda-pit-certificate/1 en pit/certificates_fundamentals/<release_id>/. Su duración se mide antes de desplegar (TF13).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/validate_pit_fundamentals.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/pit-fundamentals-certify.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/pit-fundamentals-certify.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

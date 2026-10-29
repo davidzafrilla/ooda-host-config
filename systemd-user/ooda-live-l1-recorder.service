@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — live-l1-recorder
+# 30-sep-2026 (encargo de David, plan mixto) — graba en vivo el L1 de IBKR (último precio y tamaño, oferta, demanda y tamaños en cada actualización, ~250 ms) de los tickers «caros» para ticks históricos (68), en grupos diarios rotativos de 12 líneas (el portal usa 83 de las 100 de la cuenta; 5 de margen) sobre la MISMA sesión paper :4002 que el portal. Suelta líneas si IBKR da error 101. fact_ticks (source ibkr_live_l1) vía staging propio. L-V 09:05 hasta el cierre de EE. UU.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/live_l1_recorder.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/live-l1-recorder.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/live-l1-recorder.log
+TimeoutStartSec=54000
+SuccessExitStatus=3 75

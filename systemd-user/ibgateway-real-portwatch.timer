@@ -1,0 +1,9 @@
+[Unit]
+Description=Vigilancia del 4001 del IB Gateway REAL cada 15 min, 24 h (1-oct-2026)
+
+[Timer]
+OnCalendar=*-*-* *:05,20,35,50:30
+Persistent=false
+
+[Install]
+WantedBy=timers.target

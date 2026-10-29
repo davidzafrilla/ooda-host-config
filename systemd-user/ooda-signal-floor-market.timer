@@ -1,0 +1,13 @@
+[Unit]
+Description=Schedule prospective signal-floor market
+
+[Timer]
+OnCalendar=*-*-* 19:15:00 Europe/Madrid
+OnCalendar=*-*-* 23:10:00 Europe/Madrid
+OnCalendar=*-*-* 03:15:00 Europe/Madrid
+AccuracySec=1s
+Persistent=false
+Unit=ooda-signal-floor-market.service
+
+[Install]
+WantedBy=timers.target

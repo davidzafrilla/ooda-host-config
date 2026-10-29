@@ -1,0 +1,15 @@
+[Unit]
+Description=OODA Backend REST API (port 3000)
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node /home/nanoclaw/nanoclaw-v2/dist/ooda-server.js
+WorkingDirectory=/home/nanoclaw/nanoclaw-v2
+Restart=always
+RestartSec=5
+Environment=HOME=/home/nanoclaw
+Environment=PATH=/usr/local/bin:/usr/bin:/bin:/home/nanoclaw/.local/bin
+
+[Install]
+WantedBy=default.target

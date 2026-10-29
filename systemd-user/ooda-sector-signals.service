@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — sector-signals
+# OD-05: versiones prospectivas de Eurostat STS, Census M3 completo, tráfico aéreo BTS y almacenamiento de gas EIA. Conserva bytes, hash, recepción y revisiones; no reconstruye publicaciones históricas ni modifica pesos. Sin credenciales de Census/EIA deja estado degradado explícito y sigue recogiendo las otras fuentes.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/sector_signal_collect.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/sector-signals.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/sector-signals.log
+TimeoutStartSec=300
+SuccessExitStatus=3 75

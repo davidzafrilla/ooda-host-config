@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — agent-decisions-sync
+# Decisiones y resultados de los agentes al lake (fact_agent_shadow_decisions, fact_signal_outcomes, fact_alert_outcomes) desde las fuentes VIVAS (logs/ y ASIS_DATA_DIR), una fila por decisión (record_key). Sustituye al cron del Mac retirado el 27-sep-2026 (lake único, R4).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/sync_agent_decisions.py sync
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/agent-decisions-sync.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/agent-decisions-sync.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

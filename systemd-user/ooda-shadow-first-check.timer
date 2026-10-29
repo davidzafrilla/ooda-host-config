@@ -1,0 +1,11 @@
+[Unit]
+Description=Verify first prospective shadow captures after all evening retries
+
+[Timer]
+OnCalendar=2026-10-26 23:35:00 Europe/Madrid
+Persistent=true
+AccuracySec=1s
+Unit=ooda-shadow-first-check.service
+
+[Install]
+WantedBy=timers.target

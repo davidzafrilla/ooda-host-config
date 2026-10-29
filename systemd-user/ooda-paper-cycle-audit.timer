@@ -1,0 +1,11 @@
+[Unit]
+Description=Check passive PAPER cycle evidence each minute
+
+[Timer]
+OnCalendar=*-*-* *:*:45
+AccuracySec=1s
+Persistent=true
+Unit=ooda-paper-cycle-audit.service
+
+[Install]
+WantedBy=timers.target

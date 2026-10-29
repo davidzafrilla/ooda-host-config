@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — pit-membership-refresh
+# 27-sep-2026 — pertenencia PIT (S&P 500 histórico vía EODHD fundamentals GSPC.INDX + BME vivas/deslistadas) → pit_membership.parquet → ref_pit_membership. Semanal y no mensual: además de los rebalanceos trimestrales (efectivos tras el 3.er viernes de mar/jun/sep/dic) el S&P cambia miembros fuera de calendario por fusiones/exclusiones; son 3 llamadas. Una fila por TRAMO (code, start_date): cada pasada se fusiona con los tramos conocidos (reentradas como ILMN abren tramo nuevo, cambios de ticker cierran el antiguo y recortan el sucesor); idempotente, conserva sector/industria y --sectors solo consulta los códigos nuevos. No escribe si la lista encoge > 10 % por mercado ni si borraría o encogería un tramo cerrado (rc 3). Los precios de los códigos nuevos los baja pit-universe-refresh del lunes (historia completa).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/build_pit_universe.py --membership --sectors
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/pit-membership-refresh.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/pit-membership-refresh.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

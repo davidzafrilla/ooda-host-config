@@ -1,0 +1,10 @@
+[Unit]
+Description=ooda-ops-digest 08:30 L-V (auto: diario; el lunes también semanal)
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 08:30:00
+Persistent=true
+Unit=ooda-ops-digest.service
+
+[Install]
+WantedBy=timers.target

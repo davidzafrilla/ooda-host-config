@@ -1,0 +1,16 @@
+[Unit]
+Description=OODA — recuperar cadenas de opciones conservadas en staging, sin descarga
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStartPre=-/home/nanoclaw/nanoclaw-v2/scripts/ops/record_run.sh start %n
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/collect_options_chains_yfinance.py --load-only --attempts 3 --retry-seconds 20
+ExecStopPost=-/home/nanoclaw/nanoclaw-v2/scripts/ops/record_run.sh end %n
+Environment=OODA_RUN_LOG=/home/nanoclaw/ooda-tobe/logs/options-chains-load.log
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/options-chains-load.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/options-chains-load.log
+TimeoutStartSec=180
+# El contrato record_run conserva rc75 como lock, nunca como ok.
+SuccessExitStatus=75

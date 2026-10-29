@@ -1,0 +1,12 @@
+[Unit]
+Description=OODA TO-BE — news outcome labels
+# RFC-0004 pieza 5 etapa 1 — dataset de sentimiento outcome-based (gold_news_labels + export parquet). Idempotente e incremental; corre tras la fábrica (23:50) y los event-studies (23:58). Solo articulos con published_at real; cutoffs PIT conservadores EU 14:30Z / US 20:00Z; prereg congelado reports/preregistro-sentimiento-outcome-20260818.md.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.news_outcome_labels
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/news-labels.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/news-labels.log
+TimeoutStartSec=900

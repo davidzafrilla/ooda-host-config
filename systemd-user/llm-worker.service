@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA local Worker (llama-server, clase Worker RFC-0006) — endpoint OpenAI-compatible para el router (ADR-0004)
+ConditionPathExists=%h/llm/models/current-worker.gguf
+
+[Service]
+ExecStart=%h/llm/llama.cpp/build/bin/llama-server -m %h/llm/models/current-worker.gguf --host 172.17.0.1 --port 8081 -ngl 99 -c 32768 --parallel 2 -t 8
+MemoryMax=40G
+Nice=10
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target

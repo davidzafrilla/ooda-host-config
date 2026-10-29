@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer — AGENT-PAL/KNOW shadow (Ola 3) — metricas ALE RO, G7.3 checklist, governor fire (00:50 Europe/Madrid, L-V)
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 00:50:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — rebase-intraday-basis
+# 27-sep-2026 (David) — barras de 1 min en la base de ajustes del diario: IBKR las devuelve ajustadas a la fecha de descarga y el lake mezclaba bases (MNST ×2 hasta el 6-jul por el split del 11-ago). Detecta tramos desalineados contra fact_prices_daily y los reescala (volumen solo si es un split), con copia en parquet. La pasada diaria solo corrige tramos que son un split confirmado (la limpieza de escisiones/ampliaciones se hizo una vez el 27-sep). Tras los splits (09:50) y antes del daily-pipeline (10:00); recalcula gold_intraday_features_daily de los tickers tocados.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/rebase_intraday_basis.py --apply --splits-only --rebuild-features
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/rebase-intraday-basis.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/rebase-intraday-basis.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

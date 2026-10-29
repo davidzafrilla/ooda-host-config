@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — ticks-campaign
+# 30-sep-2026 (encargo de David, plan mixto) — ticks históricos (operaciones, TRADES) de IBKR paper :4002 para los tickers «baratos» (≤ 10 h de cupo para 6 meses; 158 de 226), del más barato al más caro, poniendo al día antes los ya empezados. Cupo: data_lake/hist_pacing.json → "ticks" (20 de 60 peticiones/10 min; la campaña MIDPOINT/BID_ASK usa "backfill": 40). Staging ooda_ticks_staging.duckdb → volcado horario a fact_ticks_intraday (source ibkr_hist_trades). Para L-V 05:40-09:30 como quotes-campaign; los fines de semana sigue. flock: una sola instancia.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/ticks_campaign.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/ticks-campaign.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/ticks-campaign.log
+TimeoutStartSec=259200
+SuccessExitStatus=3 75

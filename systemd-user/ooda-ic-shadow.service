@@ -1,0 +1,11 @@
+[Unit]
+Description=OODA TO-BE — AGENT-IC-001 shadow (Ola 4) — rubrica vs veredictos de Pol, retroactivos, cadena a David
+# Solo-lectura sobre produccion AS-IS; report en reports/shadow_ic/. Receta paso 5.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/shadow_ic_agent.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/shadow-ic.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/shadow-ic.log
+TimeoutStartSec=900

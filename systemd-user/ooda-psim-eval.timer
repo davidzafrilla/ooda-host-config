@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer — evaluador PSIM-001: diario 23:20 L-V (tras el ciclo psim de las 23:08), Europe/Madrid
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 23:20:00
+Persistent=true
+RandomizedDelaySec=30
+
+[Install]
+WantedBy=timers.target

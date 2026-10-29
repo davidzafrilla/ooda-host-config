@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — eu-fundamentals-pit
+# 4-oct-2026 (opciones B4 + B3, David 3-oct: «OK al orden») — scripts/build_eu_fundamentals_pit.py: fundamentales trimestrales/semestrales/anuales de EODHD para los códigos ES/DE/FR/NL que alguna vez fueron elegibles en la capa PIT (~1.437), con known_from = fecha del comunicado de resultados de Earnings::History + 1 (mismas reglas que fundamentals_pit) o fin de periodo + 90 → pit_fundamentals_eu.parquet. B3: contraste de esas fechas con los documentos de resultados de la CNMV en España (criterio fijado antes: mediana |error| <= 1 d y <= 5 % con EODHD > 1 d antes) en pit_fundamentals_eu_report.json. Re-descarga la ficha a los 30 días (10 créditos EODHD por código: ~14.400 al mes). Las europeas deslistadas no tienen estados en EODHD (solo supervivientes; declarado).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/build_eu_fundamentals_pit.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/eu-fundamentals-pit.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/eu-fundamentals-pit.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

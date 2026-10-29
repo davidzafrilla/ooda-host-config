@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# lan-watchdog — BOSGAME_RUNBOOK B2.10. Cada 20 s (timer): si eno1 no tiene ruta por defecto o el router no responde
+# 3 veces seguidas (~1 min), enciende la WiFi (wifi-rescue on); en cuanto la LAN vuelve, la apaga (wifi-rescue off).
+# Estado en /run (se reinicia con el arranque). Registra en journal con tag lan-watchdog.
+STATE=/run/lan-watchdog.fails; FAILS_ON=3
+GW="$(ip -4 route show default dev eno1 2>/dev/null | awk '{print $3}' | head -1)"
+lan_ok=0
+if [ -n "$GW" ] && ping -c1 -W2 -I eno1 "$GW" >/dev/null 2>&1; then lan_ok=1; fi
+fails=$(cat "$STATE" 2>/dev/null || echo 0)
+if [ "$lan_ok" = 1 ]; then
+  echo 0 > "$STATE"
+  if [ -f /etc/netplan/90-wifi.yaml ]; then logger -t lan-watchdog "LAN recuperada (gw $GW): WiFi off"; /usr/local/sbin/wifi-rescue off >/dev/null; fi
+else
+  fails=$((fails+1)); echo "$fails" > "$STATE"
+  if [ "$fails" -ge "$FAILS_ON" ] && [ ! -f /etc/netplan/90-wifi.yaml ]; then
+    logger -t lan-watchdog "LAN caída ($fails comprobaciones): WiFi on"; /usr/local/sbin/wifi-rescue on >/dev/null
+  fi
+fi
