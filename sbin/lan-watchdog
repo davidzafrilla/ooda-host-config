@@ -1,18 +1,24 @@
 #!/usr/bin/env bash
 # lan-watchdog — BOSGAME_RUNBOOK B2.10. Cada 20 s (timer): si eno1 no tiene ruta por defecto o el router no responde
-# 3 veces seguidas (~1 min), enciende la WiFi (wifi-rescue on); en cuanto la LAN vuelve, la apaga (wifi-rescue off).
+# 3 veces seguidas (~1 min), enciende la WiFi (wifi-rescue on); la apaga (wifi-rescue off) cuando la LAN lleva
+# OKS_OFF comprobaciones seguidas bien.
+# 29-oct-2026: antes la apagaba con la primera comprobación buena; con un cable que parpadea (16:40-17:28) eso daba un
+# encendido/apagado cada ~4 min. Ahora pide 10 min de LAN estable (y wifi-rescue ya no toca eno1).
 # Estado en /run (se reinicia con el arranque). Registra en journal con tag lan-watchdog.
-STATE=/run/lan-watchdog.fails; FAILS_ON=3
+STATE=/run/lan-watchdog.fails; OKS=/run/lan-watchdog.oks; FAILS_ON=3; OKS_OFF=30
+WIFI_ON=/run/systemd/network/90-wifi-rescue.network
 GW="$(ip -4 route show default dev eno1 2>/dev/null | awk '{print $3}' | head -1)"
 lan_ok=0
 if [ -n "$GW" ] && ping -c1 -W2 -I eno1 "$GW" >/dev/null 2>&1; then lan_ok=1; fi
-fails=$(cat "$STATE" 2>/dev/null || echo 0)
+fails=$(cat "$STATE" 2>/dev/null || echo 0); oks=$(cat "$OKS" 2>/dev/null || echo 0)
 if [ "$lan_ok" = 1 ]; then
-  echo 0 > "$STATE"
-  if [ -f /etc/netplan/90-wifi.yaml ]; then logger -t lan-watchdog "LAN recuperada (gw $GW): WiFi off"; /usr/local/sbin/wifi-rescue off >/dev/null; fi
+  echo 0 > "$STATE"; oks=$((oks+1)); echo "$oks" > "$OKS"
+  if [ -f "$WIFI_ON" ] && [ "$oks" -ge "$OKS_OFF" ]; then
+    logger -t lan-watchdog "LAN estable $oks comprobaciones (gw $GW): WiFi off"; /usr/local/sbin/wifi-rescue off >/dev/null
+  fi
 else
-  fails=$((fails+1)); echo "$fails" > "$STATE"
-  if [ "$fails" -ge "$FAILS_ON" ] && [ ! -f /etc/netplan/90-wifi.yaml ]; then
+  echo 0 > "$OKS"; fails=$((fails+1)); echo "$fails" > "$STATE"
+  if [ "$fails" -ge "$FAILS_ON" ] && [ ! -f "$WIFI_ON" ]; then
     logger -t lan-watchdog "LAN caída ($fails comprobaciones): WiFi on"; /usr/local/sbin/wifi-rescue on >/dev/null
   fi
 fi

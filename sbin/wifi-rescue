@@ -1,11 +1,33 @@
 #!/usr/bin/env bash
-# wifi-rescue on|off — activa/desactiva la WiFi del BOSGAME (BOSGAME_RUNBOOK B2.10). Solo para rescate si la LAN no responde.
+# wifi-rescue setup|on|off — activa/desactiva la WiFi del BOSGAME (BOSGAME_RUNBOOK B2.10). Solo para rescate si la LAN no responde.
+# 29-oct-2026: sin `netplan apply`. Reconfiguraba también eno1 (perdía el DHCP) y, con lan-watchdog, un corte de cable de
+# 2 min se convirtió en 47 min de cortes (16:41-17:28). Ahora on/off solo tocan la WiFi: un .network propio en /run (sin
+# daemon-reload, que relanzaría el generador de netplan y reescribiría el de eno1), wpa_supplicant como unidad transitoria y
+# `networkctl reload`, que reconfigura solo los enlaces cuyo .network cambió. `setup` (una vez, con David, en un momento
+# tranquilo: hace un daemon-reload) saca la configuración de wpa de /etc/netplan/disabled/90-wifi.yaml.
 set -e
 [ "$(id -u)" = 0 ] || { echo "ejecutar con sudo"; exit 1; }
 WIFI_IF="$(ls /sys/class/net | grep -E '^wl' | head -1 || true)"
+[ -n "$WIFI_IF" ] || { echo "sin interfaz WiFi"; exit 1; }
+CONF=/etc/wifi-rescue/wpa.conf
+NET=/run/systemd/network/90-wifi-rescue.network
+UNIT=wifi-rescue-wpa
 case "${1:-}" in
-  on)  cp /etc/netplan/disabled/90-wifi.yaml /etc/netplan/90-wifi.yaml; chmod 600 /etc/netplan/90-wifi.yaml
-       netplan apply; sleep 8; ip -4 -br addr show "$WIFI_IF" ;;
-  off) rm -f /etc/netplan/90-wifi.yaml; netplan apply; [ -n "$WIFI_IF" ] && ip link set "$WIFI_IF" down 2>/dev/null || true; echo "WiFi off" ;;
-  *)   echo "uso: wifi-rescue on|off"; exit 2 ;;
+  setup)
+       T="$(mktemp -d)"; trap 'rm -rf "$T"' EXIT
+       install -d -m 700 "$T/etc/netplan" /etc/wifi-rescue
+       install -m 600 /etc/netplan/disabled/90-wifi.yaml "$T/etc/netplan/"
+       netplan generate --root-dir "$T"
+       install -m 600 "$T/run/netplan/wpa-$WIFI_IF.conf" "$CONF"; echo "creado $CONF" ;;
+  on)  [ -f "$CONF" ] || { echo "falta $CONF: ejecutar antes 'wifi-rescue setup'"; exit 1; }
+       printf '[Match]\nName=%s\n\n[Network]\nDHCP=ipv4\nLinkLocalAddressing=ipv6\n\n[DHCP]\nRouteMetric=600\nUseMTU=true\n' \
+         "$WIFI_IF" > "$NET"
+       ip link set "$WIFI_IF" up
+       systemctl is-active -q "$UNIT" || systemd-run -q --unit="$UNIT" --collect \
+         /sbin/wpa_supplicant -c "$CONF" -i "$WIFI_IF" -Dnl80211,wext
+       networkctl reload; sleep 8; ip -4 -br addr show "$WIFI_IF" ;;
+  off) systemctl stop "$UNIT" 2>/dev/null || true
+       rm -f "$NET"; networkctl reload
+       ip link set "$WIFI_IF" down 2>/dev/null || true; echo "WiFi off" ;;
+  *)   echo "uso: wifi-rescue setup|on|off"; exit 2 ;;
 esac
