@@ -1,0 +1,5 @@
+[monuser]
+    password = <REDACTED>
+    upsmon primary
+    actions = SET
+    instcmds = ALL

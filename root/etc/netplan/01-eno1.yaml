@@ -1,0 +1,7 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eno1:
+      dhcp4: true
+      dhcp4-overrides: {route-metric: 100}

@@ -1,0 +1,13 @@
+network:
+  version: 2
+  ethernets:
+    eno1:
+      dhcp4: true
+  wifis:
+    wlp195s0:
+      dhcp4: true
+      access-points:
+        "barbershop_5G":
+          auth:
+            key-management: "psk"
+            password: "<REDACTED>"

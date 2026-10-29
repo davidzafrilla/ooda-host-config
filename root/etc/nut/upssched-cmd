@@ -1,0 +1,18 @@
+#!/bin/sh
+# Avisos del SAI -> ALERTS.log (relay S0 cada 15 min: WARNING -> Lex, CRITICAL -> DM a David) + journal.
+ALERTS=/home/nanoclaw/ooda-tobe/logs/ALERTS.log
+ts=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+st="status=$(upsc m5ups ups.status 2>/dev/null) charge=$(upsc m5ups battery.charge 2>/dev/null)% runtime=$(upsc m5ups battery.runtime 2>/dev/null)s"
+case "$1" in
+  onbatt)         lvl=WARNING;  msg="sin red > 30 s, M5 y router en bateria ($st)";;
+  online)         lvl=INFO;     msg="red restablecida ($st)";;
+  lowbatt)        lvl=CRITICAL; msg="bateria BAJA: upsmon va a apagar el M5 ($st)";;
+  fsd)            lvl=CRITICAL; msg="apagado forzado (FSD) en curso";;
+  shutdown)       lvl=CRITICAL; msg="M5 apagandose por el SAI";;
+  commbad|nocomm) lvl=WARNING;  msg="sin comunicacion con el SAI > 2 min (USB/driver)";;
+  commok)         lvl=INFO;     msg="comunicacion con el SAI restablecida";;
+  replbatt)       lvl=WARNING;  msg="el SAI pide cambiar la bateria";;
+  *)              lvl=INFO;     msg="evento $1";;
+esac
+echo "[$ts] $lvl ups: $msg" >> "$ALERTS" 2>/dev/null
+logger -t upsmon "$lvl ups: $msg"
