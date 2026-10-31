@@ -1,0 +1,19 @@
+[Unit]
+Description=OODA — vigilante diario de solo lectura: ¿ha publicado BME el calendario de sesiones 2027? (30-oct-2026, scripts/ops/bme_calendar_watch.py)
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStartPre=-%h/nanoclaw-v2/scripts/ops/record_run.sh start %n
+Nice=10
+# Solo lee la página oficial y guarda bytes + recibo; avisa a David una vez si se publica. rc 1 (consulta fallida,
+# HTTP != 200, estructura irreconocible, documento PDF inválido o aviso no enviado) → OnFailure (DM). Nunca aprueba ni
+# incorpora la extensión. Se retira solo (desactiva su timer y avisa) el 1-ene-2027 00:00 Madrid o cuando el calendario
+# del productor v2 lleve la extensión 2027 aprobada y registrada (revisión de Codex 30-oct).
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/scripts/ops/bme_calendar_watch.py --state-dir %h/nanoclaw-v2/data/bme-calendar-watch --year 2027 --until 2027-01-01 --approved-calendar %h/nanoclaw-v2/data/h028-shadows-v2-runtime/config/calendar_2026.json
+ExecStopPost=-%h/nanoclaw-v2/scripts/ops/record_run.sh end %n
+Environment=OODA_RUN_LOG=%h/nanoclaw-v2/logs/ops/bme_calendar_watch.log
+StandardOutput=append:%h/nanoclaw-v2/logs/ops/bme_calendar_watch.log
+StandardError=append:%h/nanoclaw-v2/logs/ops/bme_calendar_watch.log
+TimeoutStartSec=300

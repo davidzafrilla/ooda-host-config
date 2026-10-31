@@ -1,0 +1,12 @@
+[Unit]
+Description=Timer — vigilante del calendario BME 2027, cada día a las 09:41 Europe/Madrid (el servicio lo desactiva al aprobarse la extensión o el 1-ene-2027)
+
+[Timer]
+OnCalendar=*-*-* 09:41:00 Europe/Madrid
+# 30-oct-2026 (revisión de Codex): disparo explícito a medianoche para que el servicio se retire el 1-ene-2027,
+# no a las 09:41. Con Persistent=true, si el host está apagado, corre al arrancar.
+OnCalendar=2027-01-01 00:00:30 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target
