@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA TO-BE — AMIBX.MC desde EODHD timer (L-V 08:55, tras price-cycle 08:40 y antes de la puerta de H-036 de las 09:25)
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 08:55:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,15 @@
+[Unit]
+Description=OODA TO-BE — AMIBX.MC desde EODHD (H-036 P3; scripts/extend_series_eodhd.py)
+# 1-nov-2026 (David, opción 1; APTO de Codex a c097b62c): cobertura diaria explícita por EODHD. AMIBX.MC dejó de
+# descargarse el 25-sep (salió de cartera.positions) y Yahoo no sirve. rc 3 = rechazo (identidad, conciliación,
+# cobertura incompleta, proveedor) ⇒ OnFailure. rc 75 = lake ocupado. Manifiesto por ejecución en logs/amibx-eodhd/.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/bin/sh -c "exec venv/bin/python scripts/extend_series_eodhd.py --symbol AMIBX.MC --apply --production --repair-id $(date -u +%%Y%%m%%dT%%H%%M%%SZ) --manifest logs/amibx-eodhd/manifest_$(date -u +%%Y%%m%%dT%%H%%M%%SZ).json --raw-out logs/amibx-eodhd/raw_$(date -u +%%Y%%m%%dT%%H%%M%%SZ).json"
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/amibx-eodhd.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/amibx-eodhd.log
+TimeoutStartSec=1800
+SuccessExitStatus=75
