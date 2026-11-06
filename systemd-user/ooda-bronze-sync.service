@@ -1,5 +1,6 @@
 [Unit]
 Description=OODA TO-BE — bronze-sync
+After=ooda-price-cycle.service
 # Archive AS-IS's live data_collector outputs into data_lake/bronze/ (copy-then-read, zero writes to AS-IS). Paths come from ASIS_DATA_DIR / DATA_LAKE_PATH in .env — same command on every machine.
 
 [Service]

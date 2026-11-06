@@ -1,12 +1,12 @@
 [Unit]
 Description=OODA TO-BE — price-cycle-monday
-# B4 (en SOMBRA): la pasada del lunes 08:00 que hoy hace monday_preopen_sectorial_rs.sh con data_price_history.py.
+# B4 (CONMUTADO 27-oct): la pasada del lunes 08:00; monday_preopen_sectorial_rs.sh espera a que publique (plazo 08:30).
 
 [Service]
 Type=oneshot
 WorkingDirectory=/home/nanoclaw/ooda-tobe
 EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
-ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.price_cycle
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.price_cycle --live
 StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/price-cycle-monday.log
 StandardError=append:/home/nanoclaw/ooda-tobe/logs/price-cycle-monday.log
 TimeoutStartSec=1800

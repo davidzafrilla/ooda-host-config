@@ -1,12 +1,12 @@
 [Unit]
 Description=OODA TO-BE — price-cycle
-# B4 (11-oct-2026, en SOMBRA): pasada de precios descarga → validación → lake → export. price_recency escribe fact_prices_daily y después price_export genera price_history_daily.json desde adjusted_close en un fichero APARTE (data_lake/exports/), solo si pasa sus validaciones. Mismas franjas que el productor vivo de NanoClaw (L-V 08:40, 09:15, 18:15; el lunes además 08:00, entrada price-cycle-monday). rc 75 si el lake sigue ocupado. La conmutación a la ruta viva requiere OK de David y 10 sesiones de sombra (price-export-shadow).
+# B4 (11-oct-2026; CONMUTADO tras 10/10 sesiones de sombra el 27-oct y OK de David): pasada de precios descarga → validación → lake → export. price_recency escribe fact_prices_daily y después price_export publica ~/nanoclaw-v2/groups/telegram_inversiones/data/price_history_daily.json (--live) desde adjusted_close, solo si pasa sus validaciones: el mtime nuevo = validado. Único productor del JSON (data_price_history.py retirado). L-V 08:40, 09:15, 18:15; el lunes además 08:00 (price-cycle-monday). rc 75 si el lake sigue ocupado.
 
 [Service]
 Type=oneshot
 WorkingDirectory=/home/nanoclaw/ooda-tobe
 EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
-ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.price_cycle
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.price_cycle --live
 StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/price-cycle.log
 StandardError=append:/home/nanoclaw/ooda-tobe/logs/price-cycle.log
 TimeoutStartSec=1800
