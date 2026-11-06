@@ -1,0 +1,11 @@
+[Unit]
+Description=Prepare pending signal-floor reviews hourly before the cycle
+
+[Timer]
+OnActiveSec=30s
+OnCalendar=*-*-* *:07:00 UTC
+Persistent=true
+Unit=ooda-signal-floor-prepare.service
+
+[Install]
+WantedBy=timers.target
