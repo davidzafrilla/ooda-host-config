@@ -53,3 +53,15 @@ Al restaurar hay que volver a ponerlas a mano.
 Cron diario `host_config_drift` (07:50) vía `with_run.sh`: `sync.sh --check`; rc 3 = divergencia → supervisor.
 
 Restaurar en un host nuevo: copiar cada ruta del repo a su ruta viva, `systemctl --user daemon-reload`, `crontab crontab/nanoclaw.crontab`.
+
+## Cierre de despliegues y aceptación de drift (6-nov-2026)
+
+Todo despliegue que cambie unidades, crontab o scripts incluidos en este inventario debe terminar con:
+
+1. Conservar el diff esperado y la referencia al cambio de código.
+2. Ejecutar `./sync.sh`; revisar todas las altas, bajas y modificaciones. Un cambio ajeno o no explicado bloquea el cierre.
+3. Versionar solo los cambios revisados, incluyendo los archivos nuevos; `--check` compara con HEAD, no con el working tree.
+4. Ejecutar `./sync.sh --check` y conservar su recibo junto al del despliegue.
+5. Verificar la siguiente pasada natural y mantener abierto el seguimiento de recurrencias si falta evidencia de causa raíz.
+
+El cron de drift nunca acepta automáticamente cambios vivos: normalizarlos sin revisión ocultaría modificaciones no autorizadas. Una pasada limpia acredita igualdad en ese instante; no demuestra que todos los futuros escritores cumplan este procedimiento. Sin `sudo -n`, el recibo excluye `root/` y debe conservar esa limitación.

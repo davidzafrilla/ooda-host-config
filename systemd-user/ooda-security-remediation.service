@@ -1,0 +1,23 @@
+[Unit]
+Description=OODA independent security remediation (tick)
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+UMask=0077
+ExecStartPre=-%h/nanoclaw-v2/scripts/ops/record_run.sh start %n
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/scripts/ops/security_remediation.py tick
+ExecStopPost=-/usr/bin/python3 -P %h/nanoclaw-v2/scripts/ops/security_remediation.py cleanup-image
+ExecStopPost=-%h/nanoclaw-v2/scripts/ops/record_run.sh end %n
+Environment=OODA_RUN_LOG=%h/nanoclaw-v2/logs/ops/security-remediation-tick.log
+StandardOutput=append:%h/nanoclaw-v2/logs/ops/security-remediation-tick.log
+StandardError=append:%h/nanoclaw-v2/logs/ops/security-remediation-tick.log
+SuccessExitStatus=75
+TimeoutStartSec=7500
+TimeoutStopSec=120
+KillMode=control-group
+Nice=10
+CPUQuota=50%
+MemoryMax=2G
+IOWeight=20

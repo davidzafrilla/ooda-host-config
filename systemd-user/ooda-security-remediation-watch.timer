@@ -1,0 +1,10 @@
+[Unit]
+Description=OODA remediation watch; independent of audit/secfix and long-running patches
+
+[Timer]
+OnCalendar=*:0/15:25
+Persistent=true
+AccuracySec=10s
+
+[Install]
+WantedBy=timers.target
