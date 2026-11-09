@@ -1,0 +1,10 @@
+[Unit]
+Description=OODA PAPER — entry stop timing every minute
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=1min
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target

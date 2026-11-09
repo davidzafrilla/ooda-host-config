@@ -1,0 +1,19 @@
+[Unit]
+Description=Independent autonomous corporate-event review and gated certification; no broker actions
+After=docker.service ooda-signal-floor-prepare.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/nanoclaw-v2
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+Nice=10
+MemoryMax=1G
+TimeoutStartSec=3300
+TimeoutStopSec=45
+SuccessExitStatus=75
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/python3 %h/nanoclaw-v2/scripts/ops/signal_floor_autoreview.py --config %h/nanoclaw-v2/data/signal-floor-autoreview-runtime/config.json
+StandardOutput=append:%h/nanoclaw-v2/logs/ops/ooda-signal-floor-autoreview.log
+StandardError=append:%h/nanoclaw-v2/logs/ops/ooda-signal-floor-autoreview.log

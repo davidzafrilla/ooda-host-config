@@ -1,0 +1,23 @@
+[Unit]
+Description=OODA PAPER — read-only observation of natural executions (option C)
+After=network.target
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=notify
+UMask=0077
+NoNewPrivileges=true
+MemoryMax=256M
+Environment=PYTHONDONTWRITEBYTECODE=1
+WorkingDirectory=%h/ooda-tobe
+ExecStart=/usr/bin/python3 -B %h/ooda-tobe/scripts/observe_paper_natural_fills.py --broker-config %h/nanoclaw-v2/groups/telegram_inversiones/scripts/broker/config.py --output %h/ooda-tobe/data/paper-natural-observer --client-id 978 --poll-seconds 30 --max-bytes 8589934592
+Restart=on-failure
+RestartSec=30
+RestartPreventExitStatus=78
+WatchdogSec=120
+TimeoutStartSec=60
+TimeoutStopSec=45
+Nice=15
+
+[Install]
+WantedBy=default.target

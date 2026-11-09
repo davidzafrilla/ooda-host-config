@@ -1,0 +1,10 @@
+[Unit]
+Description=Review closed sessions autonomously after evidence preparation
+
+[Timer]
+OnCalendar=*-*-* *:09:00 UTC
+Persistent=true
+Unit=ooda-signal-floor-autoreview.service
+
+[Install]
+WantedBy=timers.target

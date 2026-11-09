@@ -1,0 +1,15 @@
+[Unit]
+Description=OODA PAPER — independent report freshness and publisher configuration check
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+UMask=0077
+NoNewPrivileges=true
+MemoryMax=512M
+WorkingDirectory=%h/nanoclaw-v2
+ExecStartPre=-%h/nanoclaw-v2/scripts/ops/record_run.sh start %n
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/scripts/check_paper_signal_health.py --repo %h/nanoclaw-v2 --max-age-seconds 300 --approved-manifest-sha256 7e06d60bf70f5a2d2d21c4d385b46d5d874f3ca65779259d675e282f2c4b8fe9 --output %h/nanoclaw-v2/data/paper-signal-health/health.json
+ExecStopPost=-%h/nanoclaw-v2/scripts/ops/record_run.sh end %n
+TimeoutStartSec=45
+Nice=15

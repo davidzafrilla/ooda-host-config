@@ -1,0 +1,17 @@
+[Unit]
+Description=OODA PAPER — publish entry stop timing from a SQLite backup
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+UMask=0077
+NoNewPrivileges=true
+MemoryMax=512M
+Environment=PYTHONDONTWRITEBYTECODE=1
+WorkingDirectory=%h/nanoclaw-v2
+ExecStartPre=-%h/nanoclaw-v2/scripts/ops/record_run.sh start %n
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/scripts/audit_paper_entry_stop_timing.py --database %h/nanoclaw-v2/groups/telegram_inversiones/data/paper/paper_execution.db --output %h/nanoclaw-v2/groups/telegram_inversiones/data/paper/entry_stop_timing.json
+ExecStopPost=-%h/nanoclaw-v2/scripts/ops/record_run.sh end %n
+TimeoutStartSec=45
+Nice=15
+
