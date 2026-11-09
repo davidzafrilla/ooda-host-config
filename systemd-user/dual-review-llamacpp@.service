@@ -1,0 +1,14 @@
+[Unit]
+Description=dual-review: modelo %i del BOSGAME (llama.cpp)
+After=network.target
+
+[Service]
+Type=simple
+# serve_model.py valida la clave, comprueba la RAM, toma heavy.lock sin esperar y se convierte en llama-server
+ExecStart=/usr/bin/python3 -I %h/llm/dual-review/serve_model.py serve %i
+Restart=no
+Nice=10
+UMask=0077
+
+[Install]
+WantedBy=default.target
