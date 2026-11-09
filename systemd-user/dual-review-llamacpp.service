@@ -1,0 +1,13 @@
+[Unit]
+Description=dual-review Qwen3-Coder on BOSGAME
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/flock --no-fork --nonblock /home/nanoclaw/llm/run/heavy.lock /home/nanoclaw/llm/llama.cpp/build/bin/llama-server --model /home/nanoclaw/llm/models/coder/Qwen3-Coder-30B-A3B-Instruct-Q4_K_M.gguf --alias bosgame-qwen3-coder-30b --host 127.0.0.1 --port 18091 --ctx-size 32768 --parallel 1 --gpu-layers all --flash-attn on --threads 8 --threads-batch 8 --reasoning off --predict 8192 --cors-origins localhost --no-webui
+Restart=no
+Nice=10
+UMask=0077
+
+[Install]
+WantedBy=default.target
