@@ -1,0 +1,24 @@
+[Unit]
+Description=dual-review: portal de agentes (API local de la pestaña AGENTES del OODA portal)
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h
+# credenciales y sesiones de las CLI propias de dual-review, fuera de ~/.claude y ~/.codex del host
+Environment=CLAUDE_CONFIG_DIR=%h/.config/dual-review/claude
+Environment=CODEX_HOME=%h/.config/dual-review/codex
+Environment=DISABLE_AUTOUPDATER=1
+ExecStart=%h/.local/share/dual-review/venv/bin/python -m dual_review.portal serve --port 18990 --token-file %h/.config/ooda/tokens/debate_api.token
+Restart=on-failure
+RestartSec=5
+UMask=0077
+Nice=5
+# cada consulta es un proceso hijo desligado que sobrevive a un reinicio del portal (despliegues)
+KillMode=process
+# tope del portal, sus consultas, las CLI y los checks: nada de aquí puede agotar el host de producción
+TasksMax=1024
+MemoryMax=24G
+
+[Install]
+WantedBy=default.target
