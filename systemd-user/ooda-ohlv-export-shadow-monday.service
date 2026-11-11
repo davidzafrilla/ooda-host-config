@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — ohlv-export-shadow-monday
+# Plan C del OHLV (EN SOMBRA): comparación de la pasada del lunes 08:00 (tras su plazo, 08:30).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/ohlv_export_shadow_compare.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/ohlv-export-shadow-monday.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/ohlv-export-shadow-monday.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

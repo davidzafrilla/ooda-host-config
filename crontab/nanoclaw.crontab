@@ -96,7 +96,7 @@
 # Single writer to ooda_* tables. Express server is read-only. (Lex+Pol 2026-05-18)
 
 # OODA backup — daily at 06:00 (added 2026-05-19)
-0 6 * * * /home/nanoclaw/nanoclaw-v2/scripts/ops/with_run.sh ooda_backup --log /home/nanoclaw/ooda_backups/cron_backup.log -- /bin/sh -c /home/nanoclaw/nanoclaw-v2/groups/telegram_cto/scripts/ooda_backup.sh >> /home/nanoclaw/ooda_backups/cron_backup.log 2>&1
+0 6 * * * /home/nanoclaw/nanoclaw-v2/scripts/ops/with_run.sh ooda_backup --log /home/nanoclaw/ooda_backups/cron_backup.log -- /usr/bin/env OODA_BACKUP_RETENTION_DAYS=4 /bin/sh -c /home/nanoclaw/nanoclaw-v2/groups/telegram_cto/scripts/ooda_backup.sh >> /home/nanoclaw/ooda_backups/cron_backup.log 2>&1
 
 # Auditor — meta-supervisor del sistema OODA (Pol lee report en su informe semanal)
 

@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/home/nanoclaw/.local/bin/cloudflared tunnel --config /home/nanoclaw/.cloudflared/config.yml run paperclip-dashboard
+ExecStart=/home/nanoclaw/.local/bin/cloudflared tunnel --config /home/nanoclaw/.cloudflared/config.yml run m5-20261109
 Restart=always
 RestartSec=5
 

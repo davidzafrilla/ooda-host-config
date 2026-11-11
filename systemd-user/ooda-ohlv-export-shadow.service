@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — ohlv-export-shadow
+# Plan C del OHLV (B4, 10-nov-2026; EN SOMBRA, H2 del contrato prices_daily): compara el OHLV exportado del lake (data_lake/exports/ohlv_history_daily.json; lo escribe price-cycle --ohlv-shadow con el relleno IBKR provisional) con el ohlv_history_daily.json vivo de data_ohlv.py, por ticker y campo, con las tolerancias fijadas en config/ohlv_shadow_tolerances.json. Solo lectura. rc 1 (OnFailure) si la comparación es inválida o no limpia. Registro en logs/ohlv_export_shadow.jsonl; --verdict cuenta las 10 sesiones. Retirar al conmutar.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/ohlv_export_shadow_compare.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/ohlv-export-shadow.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/ohlv-export-shadow.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75
