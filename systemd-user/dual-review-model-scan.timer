@@ -1,0 +1,8 @@
+[Unit]
+Description=Weekly model discovery for Lex
+[Timer]
+OnCalendar=Mon *-*-* 07:30:00 Europe/Madrid
+Persistent=true
+Unit=dual-review-model-scan.service
+[Install]
+WantedBy=timers.target

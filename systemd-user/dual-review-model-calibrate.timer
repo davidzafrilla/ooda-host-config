@@ -1,0 +1,8 @@
+[Unit]
+Description=Process Lex model selections while production is idle
+[Timer]
+OnBootSec=5min
+OnUnitInactiveSec=15min
+Unit=dual-review-model-calibrate.service
+[Install]
+WantedBy=timers.target

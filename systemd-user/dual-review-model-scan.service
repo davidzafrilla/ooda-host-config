@@ -1,0 +1,8 @@
+[Unit]
+Description=Weekly discovery of candidate GGUF models; no loading or promotion
+[Service]
+Type=oneshot
+ExecStart=%h/.local/share/dual-review/venv/bin/python %h/.local/share/dual-review-model-watch/watch.py scan
+UMask=0077
+Nice=15
+TimeoutStartSec=30min

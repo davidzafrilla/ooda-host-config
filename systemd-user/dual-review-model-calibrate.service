@@ -1,0 +1,11 @@
+[Unit]
+Description=Guarded candidate calibration queue; no automatic promotion
+[Service]
+Type=oneshot
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=%h/.local/share/dual-review/venv/bin/python %h/.local/share/dual-review-model-watch/watch.py work
+UMask=0077
+Nice=15
+TimeoutStartSec=infinity
+TimeoutStopSec=300
+KillMode=control-group
