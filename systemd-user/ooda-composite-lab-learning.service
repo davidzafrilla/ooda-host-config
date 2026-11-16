@@ -1,7 +1,10 @@
 [Unit]
+OnFailure=ooda-onfailure@%N.service
 Description=OODA composite laboratory - publish evidence to existing reviewers
 
 [Service]
+ExecStartPre=-/home/nanoclaw/nanoclaw-v2/scripts/ops/record_run.sh start %n
+ExecStopPost=-/home/nanoclaw/nanoclaw-v2/scripts/ops/record_run.sh end %n
 Type=oneshot
 Environment=PYTHONDONTWRITEBYTECODE=1
 Nice=10

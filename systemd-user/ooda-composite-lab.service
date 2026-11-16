@@ -1,7 +1,10 @@
 [Unit]
+OnFailure=ooda-onfailure@%N.service
 Description=OODA composite laboratory - local simulation only
 
 [Service]
+ExecStartPre=-/home/nanoclaw/nanoclaw-v2/scripts/ops/record_run.sh start %n
+ExecStopPost=-/home/nanoclaw/nanoclaw-v2/scripts/ops/record_run.sh end %n
 Type=oneshot
 WorkingDirectory=/home/nanoclaw/ooda-composite-lab-release-20261116
 Environment=PYTHONDONTWRITEBYTECODE=1
@@ -14,3 +17,4 @@ RestrictAddressFamilies=AF_UNIX
 ProtectSystem=strict
 ReadWritePaths=/home/nanoclaw/ooda-composite-lab
 ExecStart=/usr/bin/python3 /home/nanoclaw/ooda-composite-lab-release-20261116/composite_lab.py cycle --config /home/nanoclaw/ooda-composite-lab-release-20261116/config.json
+ReadWritePaths=/home/nanoclaw/nanoclaw-v2/state/ops /home/nanoclaw/nanoclaw-v2/logs/ops
