@@ -5,6 +5,7 @@ Description=OODA TO-BE — event-study harness (RFC-0004 pieza 2)
 # (hash estampado). Corre tras la fábrica de etiquetas (benchmarks frescos).
 
 [Service]
+NoNewPrivileges=true
 Type=oneshot
 WorkingDirectory=/home/nanoclaw/ooda-tobe
 EnvironmentFile=/home/nanoclaw/ooda-tobe/.env

@@ -5,6 +5,7 @@ Description=OODA TO-BE — sector-history (ticker → SPDR por fechas)
 # (+ receipt); reference_sync (02:30) lo publica como ref_sector_history. No toca el lake. ~28 min (ritmo de la SEC).
 
 [Service]
+NoNewPrivileges=true
 Type=oneshot
 WorkingDirectory=/home/nanoclaw/ooda-tobe
 EnvironmentFile=/home/nanoclaw/ooda-tobe/.env

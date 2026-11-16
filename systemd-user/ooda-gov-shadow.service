@@ -3,6 +3,7 @@ Description=OODA TO-BE — AGENT-GOV-001 shadow (Ola 2) — verificacion de cita
 # Crosswalk: TO-BE/20_MIGRATION/2026-08-22-ola2-crosswalk-gov.md (receta paso 5). Solo-lectura sobre produccion AS-IS; report en reports/shadow_gov/.
 
 [Service]
+NoNewPrivileges=true
 Type=oneshot
 WorkingDirectory=/home/nanoclaw/ooda-tobe
 ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/shadow_gov_agent.py

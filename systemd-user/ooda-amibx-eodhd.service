@@ -5,6 +5,7 @@ Description=OODA TO-BE — AMIBX.MC desde EODHD (H-036 P3; scripts/extend_series
 # cobertura incompleta, proveedor) ⇒ OnFailure. rc 75 = lake ocupado. Manifiesto por ejecución en logs/amibx-eodhd/.
 
 [Service]
+NoNewPrivileges=true
 Type=oneshot
 WorkingDirectory=/home/nanoclaw/ooda-tobe
 EnvironmentFile=/home/nanoclaw/ooda-tobe/.env

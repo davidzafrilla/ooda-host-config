@@ -3,6 +3,7 @@ Description=OODA TO-BE — AGENT-PAL/KNOW shadow (Ola 3) — metricas ALE RO, G7
 # Solo-lectura sobre produccion AS-IS; report en reports/shadow_pal_know/. Receta paso 5.
 
 [Service]
+NoNewPrivileges=true
 Type=oneshot
 WorkingDirectory=/home/nanoclaw/ooda-tobe
 ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/shadow_pal_know_agent.py

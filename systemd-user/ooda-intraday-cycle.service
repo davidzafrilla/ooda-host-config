@@ -1,6 +1,7 @@
 [Unit]
 Description=OODA TO-BE — ciclo diario 1m (catch-up IBKR + 4b + suite 13 + meta-labeler) — ACTIVO en producción (M5) desde el 19-sep-2026; rc 3 si overall≠ok (S0 20-sep); avisos vía ooda-alerts-relay [auth:cron-supervisor]
 [Service]
+NoNewPrivileges=true
 Type=oneshot
 WorkingDirectory=/home/nanoclaw/ooda-tobe
 Environment=OODA_ROOT=/home/nanoclaw/ooda-tobe

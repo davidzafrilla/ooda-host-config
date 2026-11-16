@@ -5,6 +5,7 @@ Description=OODA TO-BE — AGENT-QUANT-001 shadow (Ola 1)
 # Crosswalk: TO-BE/20_MIGRATION/2026-08-17-ola1-crosswalk-quant.md
 
 [Service]
+NoNewPrivileges=true
 Type=oneshot
 WorkingDirectory=/home/nanoclaw/ooda-tobe
 ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python scripts/shadow_quant_agent.py

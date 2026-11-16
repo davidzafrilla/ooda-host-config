@@ -2,6 +2,7 @@
 Description=OODA — recuperar cadenas de opciones conservadas en staging, sin descarga
 
 [Service]
+NoNewPrivileges=true
 Type=oneshot
 WorkingDirectory=/home/nanoclaw/ooda-tobe
 EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
