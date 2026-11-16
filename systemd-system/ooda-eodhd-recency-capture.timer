@@ -1,0 +1,18 @@
+[Unit]
+Description=Capturas EODHD_RECENCY: tres matinales a la hora de las pasadas de price_cycle, cierre europeo y cierre de EE. UU.
+
+[Timer]
+# Matinales: las horas de las pasadas de price_cycle (08:00 solo corre los lunes, pero se captura a diario).
+OnCalendar=Mon..Fri 08:00 Europe/Madrid
+OnCalendar=Mon..Fri 08:40 Europe/Madrid
+OnCalendar=Mon..Fri 09:15 Europe/Madrid
+# Tarde y noche: diez y cinco minutos después de la captura del piloto BME, para no solapar las dos.
+OnCalendar=Mon..Fri 18:25 Europe/Madrid
+OnCalendar=Mon..Fri 23:35 Europe/Madrid
+# Sábado: la sesión del viernes de EE. UU. ya publicada, sin esperar al lunes.
+OnCalendar=Sat 08:00 Europe/Madrid
+Persistent=false
+Unit=ooda-eodhd-recency-capture.service
+
+[Install]
+WantedBy=timers.target

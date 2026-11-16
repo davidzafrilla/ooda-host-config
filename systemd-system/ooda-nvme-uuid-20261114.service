@@ -1,0 +1,10 @@
+[Unit]
+Description=Require the identified WD SN7100 before OODA data binds
+DefaultDependencies=no
+BindsTo=srv-data.mount
+After=srv-data.mount
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -ec 'test "$(/usr/bin/findmnt -rn -M /srv/data -o UUID)" = a94c1e44-74a5-4772-a988-2ad407238ade'
+RemainAfterExit=yes

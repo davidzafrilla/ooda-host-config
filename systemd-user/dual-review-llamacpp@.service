@@ -1,11 +1,15 @@
 [Unit]
 Description=dual-review: modelo %i del BOSGAME (llama.cpp)
 After=network.target
+# tras un fallo de GPU (lo escribe serve_model.py o una persona): no arranca ningún modelo hasta retirarlo
+ConditionPathExists=!%h/.local/state/dual-review/gpu-recovery-block
 
 [Service]
 Type=simple
 # serve_model.py valida la clave, comprueba la RAM, toma heavy.lock sin esperar y se convierte en llama-server
 ExecStart=/usr/bin/python3 -I %h/llm/dual-review/serve_model.py serve %i
+# 75 (EX_TEMPFAIL): las guardas de memoria rechazan la carga antes de ejecutar llama-server
+SuccessExitStatus=75
 Restart=no
 Nice=10
 UMask=0077

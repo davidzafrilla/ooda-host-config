@@ -1,0 +1,9 @@
+[Unit]
+Description=dual-review: reintenta cada 15 min el aprendizaje pendiente
+
+[Timer]
+OnBootSec=10min
+OnUnitInactiveSec=15min
+
+[Install]
+WantedBy=timers.target

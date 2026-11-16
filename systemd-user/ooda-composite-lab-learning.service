@@ -1,0 +1,12 @@
+[Unit]
+Description=OODA composite laboratory - publish evidence to existing reviewers
+
+[Service]
+Type=oneshot
+Environment=PYTHONDONTWRITEBYTECODE=1
+Nice=10
+CPUQuota=10%
+MemoryMax=128M
+NoNewPrivileges=true
+RestrictAddressFamilies=AF_UNIX
+ExecStart=/usr/bin/python3 /home/nanoclaw/ooda-composite-lab-release-20261116/composite_lab_publish_learning.py --config /home/nanoclaw/ooda-composite-lab-release-20261116/config.json

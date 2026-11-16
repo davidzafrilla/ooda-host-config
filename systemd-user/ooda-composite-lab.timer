@@ -1,0 +1,10 @@
+[Unit]
+Description=Schedule ooda-composite-lab
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 08..22:02/5:00
+Persistent=false
+RandomizedDelaySec=10
+
+[Install]
+WantedBy=timers.target
