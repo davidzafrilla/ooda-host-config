@@ -1,0 +1,10 @@
+[Unit]
+Description=Audit provider usage coverage every minute
+
+[Timer]
+OnBootSec=30
+OnUnitInactiveSec=60
+AccuracySec=5
+
+[Install]
+WantedBy=timers.target

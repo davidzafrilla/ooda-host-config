@@ -1,0 +1,8 @@
+[Unit]
+Description=OODA provider usage reconciliation and coverage audit
+
+[Service]
+Type=oneshot
+Environment=OODA_DATA_USAGE_DISABLE=1
+ExecStart=/usr/bin/python3 /home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/scripts/data_usage_reconcile.py
+TimeoutStartSec=120

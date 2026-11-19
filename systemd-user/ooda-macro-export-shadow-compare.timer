@@ -1,0 +1,9 @@
+[Unit]
+Description=OODA TO-BE — macro-export-shadow-compare timer
+
+[Timer]
+OnCalendar=Mon,Tue,Wed,Thu,Fri *-*-* 08:05:00 Europe/Madrid
+Persistent=true
+
+[Install]
+WantedBy=timers.target

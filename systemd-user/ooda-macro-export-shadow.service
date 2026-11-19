@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — macro-export-shadow
+# B7 (18-nov-2026; EN SOMBRA): sección fred de macro_daily.json desde el lake (fact_macro_indicators = última revisión, decisión de David del 11-oct, opción a) a data_lake/exports/macro_fred.json, tras macro-sync. Solo lectura del lake; nunca escribe macro_daily.json. rc 3 si falta alguna de las 15 series (no escribe). Retirar al conmutar (la publicación pasa a ser la de la conmutación, con OK de David).
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -m src.pipelines.macro_export
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/macro-export-shadow.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/macro-export-shadow.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75

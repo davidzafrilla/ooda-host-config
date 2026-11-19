@@ -1,0 +1,21 @@
+[Unit]
+Description=BUG-20261116-002 adoption, observation and gated rollback retirement
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+UMask=0077
+ExecStartPre=-%h/nanoclaw-v2/scripts/ops/record_run.sh start %n
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/scripts/ops/linux_libc_rollout.py tick
+ExecStopPost=-%h/nanoclaw-v2/scripts/ops/record_run.sh end %n
+Environment=OODA_RUN_LOG=%h/nanoclaw-v2/logs/ops/linux-libc-rollout.log
+StandardOutput=append:%h/nanoclaw-v2/logs/ops/linux-libc-rollout.log
+StandardError=append:%h/nanoclaw-v2/logs/ops/linux-libc-rollout.log
+SuccessExitStatus=75
+TimeoutStartSec=3600
+Nice=10
+CPUQuota=50%
+MemoryMax=2G
+IOWeight=20
+

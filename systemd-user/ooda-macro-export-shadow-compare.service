@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — macro-export-shadow-compare
+# B7 (EN SOMBRA): compara el export del lake con la sección fred del macro_daily.json vivo tras run_data_macro de las 07:50 (15 series, fechas, valores, formato y frescura de 80 h); logs/macro_export_shadow.jsonl; --verdict cuenta las sesiones limpias (10, del 23-nov al 4-dic). Solo lectura. Retirar al conmutar.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/macro_export_shadow_compare.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/macro-export-shadow-compare.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/macro-export-shadow-compare.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75
