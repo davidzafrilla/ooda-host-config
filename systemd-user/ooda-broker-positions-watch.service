@@ -1,0 +1,17 @@
+[Unit]
+Description=OODA — vigilante de posiciones de la cuenta IBKR REAL (solo lectura, :4001 clientId 67) → broker_real_positions.json
+After=network-online.target
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=simple
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=DATA_DIR=%h/nanoclaw-v2/groups/telegram_inversiones/data
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/groups/telegram_inversiones/scripts/broker_positions_watch.py
+StandardOutput=append:%h/nanoclaw-v2/groups/telegram_inversiones/logs/broker_positions_watch.log
+StandardError=append:%h/nanoclaw-v2/groups/telegram_inversiones/logs/broker_positions_watch.log
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=default.target

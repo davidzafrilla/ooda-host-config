@@ -1,0 +1,13 @@
+[Unit]
+Description=OODA TO-BE — next-earnings-witness
+# B9. Archiva la foto EODHD y contrasta el próximo resultado con NanoClaw tras los refrescos de 07:12 y 08:00. logs/next_earnings_witness.jsonl recoge los avisos nuevos (rc 3). El veredicto de reapertura es consultivo.
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/nanoclaw/ooda-tobe
+EnvironmentFile=/home/nanoclaw/ooda-tobe/.env
+ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python /home/nanoclaw/ooda-tobe/scripts/next_earnings_witness.py
+StandardOutput=append:/home/nanoclaw/ooda-tobe/logs/next-earnings-witness.log
+StandardError=append:/home/nanoclaw/ooda-tobe/logs/next-earnings-witness.log
+TimeoutStartSec=1800
+SuccessExitStatus=3 75
