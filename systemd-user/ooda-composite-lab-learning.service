@@ -1,5 +1,6 @@
 [Unit]
 OnFailure=ooda-onfailure@%N.service
+After=ooda-composite-lab-outcomes.service
 Description=OODA composite laboratory - publish evidence to existing reviewers
 
 [Service]
