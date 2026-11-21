@@ -1,8 +1,0 @@
-[Unit]
-Description=Verificar enlace CNXT tras membership natural del 21-nov; no cerrar ticket
-
-[Service]
-Type=oneshot
-Environment=PYTHONDONTWRITEBYTECODE=1
-ExecStart=/home/nanoclaw/ooda-tobe/venv/bin/python -B /home/nanoclaw/reports/BUG-20261031-003-deploy-20261115/verify_natural.py
-TimeoutStartSec=180
