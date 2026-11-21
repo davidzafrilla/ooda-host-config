@@ -569,6 +569,8 @@
 
 # chart_episodes 01:10 M-S (9-oct-2026, pre-registro figuras §10.3): episodios desde chart_patterns_history.jsonl tras el detector v3 de las 00:40 (tarea NanoClaw). Acredita publicación completa y reciente; espera hasta 40 min si el productor va tarde. rc 3 = sin publicación acreditada (no es «cero figuras»); 75 = cerrojo. Observación: no toca score ni órdenes.
 10 1 * * 2-6 /home/nanoclaw/nanoclaw-v2/scripts/ops/with_run.sh chart_episodes --log /home/nanoclaw/nanoclaw-v2/logs/chart_episodes.log --timeout 3300 -- /bin/sh -c 'cd /home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones && /usr/bin/python3 scripts/chart_episodes_runner.py --max-wait-s 2400 --poll-s 120' >> /home/nanoclaw/nanoclaw-v2/logs/chart_episodes.log 2>&1
+# data_ohlv_intraday 00:32 M-S (21-nov-2026, David): H4 nocturno desde el host; antes tarea de Lex, que el 20-nov murió a los 120 s en el lote 10/22 (H4 rancio en 190 tickers). Guarda por lotes y empieza por los más rancios. rc 3 = < 90 % bajados; 75 = cerrojo.
+32 0 * * 2-6 /home/nanoclaw/nanoclaw-v2/scripts/ops/with_run.sh data_ohlv_intraday --log /home/nanoclaw/nanoclaw-v2/logs/data_ohlv_intraday.log --timeout 1200 -- /bin/sh -c 'cd /home/nanoclaw/nanoclaw-v2/groups/telegram_inversiones/scripts && OHLV_PROVIDER=yfinance /usr/bin/python3 -B data_ohlv_intraday.py' >> /home/nanoclaw/nanoclaw-v2/logs/data_ohlv_intraday.log 2>&1
 
 # pol_accuracy (12-oct-2026): Friday 23:58 Madrid, after outcome producers.
 # Report only, current + previous 2 ISO weeks to incorporate matured 5d outcomes; no agent/Telegram messages.
