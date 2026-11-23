@@ -14,4 +14,6 @@ ExecStart=/bin/bash /home/nanoclaw/ooda-tobe/scripts/daily_intraday_cycle.sh
 TimeoutStartSec=14400
 # 28-sep-2026 (D10): rc 3 = degradado → run_degraded del supervisor + status_degraded de ooda-alerts-relay; no deja
 # la unidad failed ni dispara OnFailure (el mismo episodio salía 4 veces). Los abortos del ciclo salen con rc 1.
-SuccessExitStatus=3
+# 23-nov-2026: rc 75 = no arrancó (otro ciclo con el cerrojo o backfill vivo; antes rc 0). Tampoco es un fallo de la unidad:
+# el supervisor lo registra como lock y, con backfill vivo, ooda-alerts-relay avisa por overall=deferred.
+SuccessExitStatus=3 75
