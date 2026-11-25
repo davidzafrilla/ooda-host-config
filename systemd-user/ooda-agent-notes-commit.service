@@ -6,3 +6,6 @@ OnFailure=ooda-onfailure@%N.service
 Type=oneshot
 WorkingDirectory=%h/nanoclaw-v2
 ExecStart=%h/nanoclaw-v2/scripts/agent-notes/commit-agent-notes.sh
+# rc 3 = deuda (núcleo por encima del tope, fichero borrado): la recoge el supervisor (R2) desde runs.jsonl sin dejar
+# la unidad «failed». Un secreto sale con rc 1 y sí dispara OnFailure (24-nov-2026, docs/ops-exit-codes.md regla 5).
+SuccessExitStatus=3

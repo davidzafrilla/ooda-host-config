@@ -1,0 +1,30 @@
+[Unit]
+Description=OODA — opsfix EN SOMBRA: un HIGH sin resolver del supervisor → diagnóstico y fix (Claude) + revisión (Codex) en contenedor ooda-opsfix, rama local sin push y propuesta de Pol a David, 24-nov-2026 (scripts/ops/opsfix_run.py)
+OnFailure=ooda-onfailure@%N.service
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+# modelo, esfuerzo y topes: cambiar aquí, no en el script
+Environment=OPSFIX_MODEL=claude-opus-5-5
+Environment=OPSFIX_EFFORT=high
+Environment=OPSFIX_BUDGET_USD=4
+Environment=OPSFIX_MAX_TURNS=60
+Environment=OPSFIX_ROUNDS=6
+# 0 = sin tope diario (David, 24-nov-2026: un caso por pasada, cada 30 min de 08:07 a 23:37)
+Environment=OPSFIX_MAX_PER_DAY=0
+# SECFIX_TEST_IMAGE (imagen revisada del sandbox de tests); la escribe install.sh --opsfix desde ooda-secfix
+EnvironmentFile=-%h/.config/ooda/opsfix.env
+ExecStartPre=-%h/nanoclaw-v2/scripts/ops/record_run.sh start %n
+Nice=10
+ExecStart=/usr/bin/python3 -P %h/nanoclaw-v2/scripts/ops/opsfix_run.py
+# si systemd corta la pasada, matar el cliente docker no para el contenedor: se borran los de la etiqueta propia
+ExecStopPost=-/bin/sh -c 'docker ps -aq --filter label=ooda-opsfix=1 | xargs -r docker rm -f'
+ExecStopPost=-%h/nanoclaw-v2/scripts/ops/record_run.sh end %n
+Environment=OODA_RUN_LOG=%h/nanoclaw-v2/logs/ops/opsfix.log
+StandardOutput=append:%h/nanoclaw-v2/logs/ops/opsfix.log
+StandardError=append:%h/nanoclaw-v2/logs/ops/opsfix.log
+# 3 = pasada degradada (lo dice el aviso de Pol y findings.jsonl) · 75 = cerrojo
+SuccessExitStatus=3 75
+# OPSFIX_DEADLINE_S (9000) acota modelos y revisión; el resto es validación en el sandbox
+TimeoutStartSec=10800

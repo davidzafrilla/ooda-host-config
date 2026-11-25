@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer — opsfix cada 30 min de 08:07 a 23:37 (:07 y :37), un caso por pasada, sin tope diario (David, 24-nov-2026); sin Persistent
+
+[Timer]
+OnCalendar=*-*-* 08..23:07,37:00
+Persistent=false
+
+[Install]
+WantedBy=timers.target
